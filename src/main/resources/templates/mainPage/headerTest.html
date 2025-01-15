@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>한계돌파</title>
+		<link rel="stylesheet" href="/css/bootstrap.css">
+		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/css/styles.css">
 	</head>
 	
 	<body>
 		<div id="header"></div>
-		<h1>Hello Spring Team Project!!</h1>
+		<h1>Hello Spring Team Project Wolrd!</h1>
+		
 	</body>
 	
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-	<script>
+	<script th:inline="javascript">
+	
 		$(function(){
 			$("#header").load("../header.html");
 		});
+
 	</script>
 </html>

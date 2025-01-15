@@ -1,0 +1,69 @@
+/*------------------------------------------------------------- 전체 적용 */
+
+body{
+    font-family: "Noto Sans KR";
+    
+}
+
+a{
+    text-decoration: none;
+}
+
+/*------------------------------------------------------------- 메인헤더 */
+#mainHeaderDiv{
+    margin: 0% auto;
+}
+
+#mainHeaderTableBar{
+    background-color: rgba(229, 195, 255, 1);
+    padding: auto;
+    width: 100%;
+    height: 50px;
+    
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    color: black;
+}
+
+#mainHeaderTableBar a{
+    color: black;
+}
+
+#mainHeader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: auto;
+    position: relative
+}
+
+#mainHeaderLogo{
+    object-fit: cover;
+}
+
+#mainHeaderLogin{
+}
+
+#checkLogin {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* p와 img 간의 간격 설정 */
+    width: 200px;
+    position: absolute;
+    right: 20px;
+
+    font-size: 14px;
+    color: rgba(126, 104, 142, 1);
+}
+
+#checkLogin p {
+    margin: 0;
+}
+
+#checkLogin img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
