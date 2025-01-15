@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <body>
       <div id="mainHeader">
-          <a href="/headerTest"><img id="mainHeaderLogo" src="img/logo.png" width="110"></a>
+          <a href="#" onclick="SPA_mainPage()"><img id="mainHeaderLogo" src="img/logo.png" width="110"></a>
           
           <div id="checkLogin"></div>
           
@@ -9,7 +9,7 @@
       <table id="mainHeaderTableBar">
           <tbody>
               <tr>
-                  <td><a href="#" onclick="aboutService()">서비스 소개</a></td>
+                  <td><a href="#" onclick="SPA_AboutPage()">서비스 소개</a></td>
                   <td><a href="../dashBoardTest">대시보드</a></td>
                   <td><a href="../communityTest">커뮤니티</a></td>
                   <td><a href="../locationTest">클라이밍 위치</a></td>
@@ -49,7 +49,7 @@
 		   console.error("Fetch error:", err);
 	   });
 	
-	function aboutService(){
+	function SPA_AboutPage(){
 		fetch('/locationTest').then(function(resp){
 			resp.text().then(function(text){
 				document.querySelector('article').innerHTML = text;
@@ -60,5 +60,7 @@
 			})
 		});
 	}
+	
+	
 
  </script>
