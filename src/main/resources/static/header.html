@@ -1,18 +1,18 @@
 <!DOCTYPE html>
+<html>
 <body>
       <div id="mainHeader">
-          <a href="#" onclick="SPA_mainPage()"><img id="mainHeaderLogo" src="img/logo.png" width="110"></a>
+          <a href="/headerTest"><img id="mainHeaderLogo" src="img/logo.png" width="110"></a>
           
           <div id="checkLogin"></div>
-          
       </div>
       <table id="mainHeaderTableBar">
           <tbody>
               <tr>
-                  <td><a href="#" onclick="SPA_AboutPage()">서비스 소개</a></td>
-                  <td><a href="../dashBoardTest">대시보드</a></td>
-                  <td><a href="../communityTest">커뮤니티</a></td>
-                  <td><a href="../locationTest">클라이밍 위치</a></td>
+                  <td><a href="#" onclick="SPA_MovePage('/aboutServicePage')">서비스 소개</a></td>
+                  <td><a href="#" onclick="SPA_MovePage('/dashBoardTest')">대시보드</a></td>
+                  <td><a href="#" onclick="SPA_MovePage('/communityTest')">커뮤니티</a></td>
+                  <td><a href="#" onclick="SPA_MovePage('/locationTest')">클라이밍 위치</a></td>
               </tr>
           </tbody>
       </table>
@@ -23,6 +23,7 @@
 
 <script>
 
+	const articleElement = document.querySelector('article');
 	const loginDiv = document.getElementById("checkLogin");
 	var loginDivTags = '';
 	
@@ -32,10 +33,13 @@
 	   	console.log("Flag: " + data.flag);
 	
 	       if (data.flag) {
+	    	   let tag = "'/userProfileTest'";
 	           //console.log(data.user.userAlias);
 	    	   loginDivTags = '<p>환영합니다!' + data.user.userAlias;
 	    	   loginDivTags += '</p>';
-	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userProfile" src="'+ data.user.userProfilePath +'"></a>';
+	    	   loginDivTags += '<a href="#" onclick="SPA_MovePage(' + tag + ')"><img id="userProfile" src="'+ data.user.userProfilePath +'"></a>';
+	       
+	       	console.log(loginDivTags);
 	       }
 	       else {
 	   	   		//console.log("로그인없슴");
@@ -49,18 +53,31 @@
 		   console.error("Fetch error:", err);
 	   });
 	
-	function SPA_AboutPage(){
-		fetch('/locationTest').then(function(resp){
-			resp.text().then(function(text){
-				document.querySelector('article').innerHTML = text;
-			})
+	async function SPA_MovePage(msg){
+		
+		articleElement.innerHTML = "Loading...";
+		
+		try{
+			const resp = await fetch(msg);
 			
-			.catch(err => {
-				console.error("About-Page Fetch err: ", err);
-			})
-		});
+			if(!resp.ok){
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			
+			const text = await resp.text();
+	        articleElement.innerHTML = text;
+	        
+	        const parentDIV = document.querySelector('#headerTest');
+	        if (parentDIV) {
+	        	parentDIV.style.display = 'none';
+	            // parentH1.remove();
+	        }
+		}
+		catch(e){
+	        console.error("About-Page Fetch error:", e);
+	        articleElement.innerHTML = "페이지 로드 실패ㅠㅠ";
+		}
 	}
-	
-	
 
  </script>
+</html>

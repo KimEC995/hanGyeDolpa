@@ -78,4 +78,9 @@ public class mainPageController {
 	public String userProfileTest() {
 		return "Sample_UserProfile.html";
 	}
+	
+	@GetMapping("aboutServicePage")
+	public String aboutServicePage() {
+		return "aboutService.html";
+	}
 }
