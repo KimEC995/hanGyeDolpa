@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreait.hanGyeDolpa.bean.UserVO;
@@ -18,20 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class mainPageController {
 	
+	boolean loginFlag = false;
+	
 	@Autowired
 	private UserServiceImpl uService;
 	
-	private boolean checkUserLogin() {
-		
-		boolean flag = uService.makeUserLogin();
-		
-		return flag;
-	}
-	
 	@GetMapping("headerTest")
 	public String headerTest(Model model) {
-		boolean loginFlag = false;
-		model.addAttribute("flag", loginFlag);
+		//model.addAttribute("flag", loginFlag);
 		
 		return "mainPage/headerTest";
 	}
@@ -42,7 +37,7 @@ public class mainPageController {
 		
 		Map<String, Object> resp = new HashMap<>();
 		
-		boolean flag = checkUserLogin();
+		boolean flag = loginFlag;
 		resp.put("flag", flag);
 		
 		if(flag) {
@@ -64,6 +59,12 @@ public class mainPageController {
 		return "Sample_Login.html";
 	}
 	
+	@PostMapping("loginTest")
+	public String loginTestPOST() {
+		loginFlag = uService.makeUserLogin(loginFlag, true);
+		return "redirect:headerTest";
+	}
+	
 	@GetMapping("dashBoardTest")
 	public String dashBoardTest() {
 		return "Sample_DashBoard.html";
@@ -77,5 +78,21 @@ public class mainPageController {
 	@GetMapping("userProfileTest")
 	public String userProfileTest() {
 		return "Sample_UserProfile.html";
+	}
+	
+	@PostMapping("userProfileTest")
+	public String userProfileTestPOST() {
+		loginFlag= uService.makeUserLogin(loginFlag, false);
+		return "redirect:headerTest";
+	}
+	
+	@GetMapping("aboutService")
+	public String aboutService() {
+		return "aboutService.html";
+	}
+	
+	@GetMapping("eventPage")
+	public String eventPage() {
+		return "Sample_eventPage.html";
 	}
 }

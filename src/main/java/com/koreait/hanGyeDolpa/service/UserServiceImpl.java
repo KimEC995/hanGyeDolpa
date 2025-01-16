@@ -19,10 +19,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean makeUserLogin() {
-		boolean loginFlag = true;
+	public boolean makeUserLogin(boolean flag, boolean str) {
+		flag = str;
 		
-		return loginFlag;
+		return flag;
 	}
 
 }

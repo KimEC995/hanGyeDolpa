@@ -9,7 +9,7 @@
       <table id="mainHeaderTableBar">
           <tbody>
               <tr>
-                  <td><a href="#" onclick="aboutService()">서비스 소개</a></td>
+                  <td><a href="#about" onclick="aboutService()">서비스 소개</a></td>
                   <td><a href="../dashBoardTest">대시보드</a></td>
                   <td><a href="../communityTest">커뮤니티</a></td>
                   <td><a href="../locationTest">클라이밍 위치</a></td>
@@ -33,9 +33,13 @@
 	
 	       if (data.flag) {
 	           //console.log(data.user.userAlias);
-	    	   loginDivTags = '<p>환영합니다!' + data.user.userAlias;
+	    	   loginDivTags = '<div id="userDataMini"><p>환영합니다!' + data.user.userAlias;
 	    	   loginDivTags += '</p>';
+	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userICON" src="../img/userBookMarkIcon.png"></a>';
+	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userICON" src="../img/userBellIcon.png"></a>';
+	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userICON" src="../img/userSettingIcon.png"></a></div>';
 	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userProfile" src="'+ data.user.userProfilePath +'"></a>';
+	       
 	       }
 	       else {
 	   	   		//console.log("로그인없슴");
@@ -49,16 +53,29 @@
 		   console.error("Fetch error:", err);
 	   });
 	
-	function aboutService(){
-		fetch('/locationTest').then(function(resp){
-			resp.text().then(function(text){
-				document.querySelector('article').innerHTML = text;
-			})
-			
-			.catch(err => {
-				console.error("About-Page Fetch err: ", err);
-			})
-		});
+	async function aboutService() {
+	    const articleElement = document.querySelector('article');
+
+	    articleElement.innerHTML = "기다리세용~";
+
+	    try {
+	        const resp = await fetch('/aboutService');
+	        if (!resp.ok) {
+	            throw new Error(`SPA 테스트 오류ㅠㅠ status: ${resp.status}`);
+	        }
+
+	        const text = await resp.text();
+	        articleElement.innerHTML = text;
+
+	        const parentMain = document.querySelector('#service');
+	        if (parentMain) {
+	            //parentMain.style.display = 'none';
+	            parentMain.remove();
+	        }
+	    } catch (error) {
+	        console.error("Fetch오류ㅜㅜ error:", error);
+	        articleElement.innerHTML = "Fetch 오류로 인한 로드 에러.";
+	    }
 	}
 
  </script>
