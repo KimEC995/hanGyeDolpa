@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운동 기록 화면</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/exercise.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>운동 기록 화면</h1>
+    </header>
+    <main>
+        <section style="display: flex; justify-content: space-between;">
+            <div id="calendar" style="width: 45%;">
+                <h2>날짜 선택</h2>
+                <div id="calendar-header">
+                    <button id="prev-month-btn">&lt;</button>
+                    <h2 id="calendar-title"></h2>
+                    <button id="next-month-btn">&gt;</button>
+                </div>
+                <div id="calendar-days"></div>
+
+                <!-- 운동 기록하기 버튼을 달력 아래 중앙에 위치 -->
+                <div style="text-align: center; margin-top: 20px;">
+                    <button onclick="location.href='/exercise/add'" class="record-button">운동 기록하기</button>
+                </div>
+            </div>
+
+            <div id="exercise-records" style="width: 45%; margin-left: 20px;">
+                <h2>운동 기록</h2>
+                <p>운동 기록이 없습니다. 운동 좀 하세요!</p>
+            </div>
+        </section>
+
+        <section>
+            <button onclick="location.href='/'" class="back-button">&#8592; 대시보드로 돌아가기</button>
+        </section>
+    </main>
+</body>
+</html>
+
+
+
+
+
+
+
