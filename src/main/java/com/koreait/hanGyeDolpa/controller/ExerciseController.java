@@ -1,23 +1,27 @@
 package com.koreait.hanGyeDolpa.controller;
 
-import com.koreait.hanGyeDolpa.entity.ExerciseRecord;
+import com.koreait.hanGyeDolpa.entity.Exercise;
+import com.koreait.hanGyeDolpa.entity.User;
 import com.koreait.hanGyeDolpa.service.ExerciseService;
+import com.koreait.hanGyeDolpa.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/exercise")
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
+    private final UserService userService;
 
-    public ExerciseController(ExerciseService exerciseService) {
+    public ExerciseController(ExerciseService exerciseService, UserService userService) {
         this.exerciseService = exerciseService;
+        this.userService = userService;
     }
 
     @PostMapping("/add")
@@ -26,25 +30,58 @@ public class ExerciseController {
             String exerciseType = (String) payload.get("exerciseType");
             LocalDate exerciseDate = LocalDate.parse((String) payload.get("exerciseDate"));
             String location = (String) payload.get("location");
-            int difficulty = Integer.parseInt((String) payload.get("difficulty"));
-            int calories = Integer.parseInt((String) payload.get("calories"));
-            int timeSpent = Integer.parseInt((String) payload.get("timeSpent"));
+            int difficulty = getIntFromPayload(payload, "difficulty");
+            int calories = getIntFromPayload(payload, "calories");
+            int timeSpent = getIntFromPayload(payload, "timeSpent");
+            Long userId = getLongFromPayload(payload, "userId");
 
-            // 사용자 정보를 null로 설정
-            ExerciseRecord record = new ExerciseRecord(exerciseType, exerciseDate, location, difficulty, calories, timeSpent, null);
-            ExerciseRecord savedRecord = exerciseService.addExerciseRecord(record);
+            User user = userService.findById(userId);
+            if (user == null) {
+                return ResponseEntity.badRequest().body(Map.of("message", "유효하지 않은 사용자입니다."));
+            }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "운동 기록이 성공적으로 등록되었습니다.", "id", savedRecord.getId()));
+            Exercise record = new Exercise(location, exerciseDate, difficulty, 0, calories, timeSpent, user);
+            Exercise savedRecord = exerciseService.addExerciseRecord(record);
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                .body(Map.of("message", "운동 기록이 성공적으로 등록되었습니다.", "id", savedRecord.getId()));
         } catch (Exception e) {
-            e.printStackTrace(); // 예외 스택 트레이스 출력
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(Map.of("message", "운동 기록 등록에 실패했습니다: " + e.getMessage()));
         }
     }
+
+    @GetMapping("/records")
+    public ResponseEntity<List<Exercise>> getExerciseRecords(@RequestParam String date) {
+        try {
+            LocalDate localDate = LocalDate.parse(date);
+            List<Exercise> exerciseRecords = exerciseService.findByDate(localDate);
+            return ResponseEntity.ok(exerciseRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    private int getIntFromPayload(Map<String, Object> payload, String key) {
+        Object value = payload.get(key);
+        if (value instanceof Number) {
+            return ((Number) value).intValue();
+        } else if (value instanceof String) {
+            return Integer.parseInt((String) value);
+        }
+        throw new IllegalArgumentException(key + " 값이 유효하지 않습니다.");
+    }
+
+    private Long getLongFromPayload(Map<String, Object> payload, String key) {
+        Object value = payload.get(key);
+        if (value instanceof Number) {
+            return ((Number) value).longValue();
+        } else if (value instanceof String) {
+            return Long.parseLong((String) value);
+        }
+        throw new IllegalArgumentException(key + " 값이 유효하지 않습니다.");
+    }
 }
-
-
-
-
-
 
 

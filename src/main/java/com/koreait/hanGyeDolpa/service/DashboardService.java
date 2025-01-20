@@ -1,6 +1,6 @@
 package com.koreait.hanGyeDolpa.service;
 
-import com.koreait.hanGyeDolpa.entity.ExerciseRecord;
+import com.koreait.hanGyeDolpa.entity.Exercise;
 import com.koreait.hanGyeDolpa.repository.ExerciseRecordRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -16,12 +16,12 @@ public class DashboardService {
     }
 
     public int calculateTotalCalories(Long userId, LocalDate startDate, LocalDate endDate) {
-        List<ExerciseRecord> records = exerciseRecordRepository.findByUserIdAndExerciseDateBetween(userId, startDate, endDate);
-        return records.stream().mapToInt(ExerciseRecord::getCalories).sum();
+        List<Exercise> records = exerciseRecordRepository.findByUserIdAndExerciseDateBetween(userId, startDate, endDate);
+        return records.stream().mapToInt(Exercise::getCalories).sum();
     }
 
     public int calculateTotalTime(Long userId, LocalDate startDate, LocalDate endDate) {
-        List<ExerciseRecord> records = exerciseRecordRepository.findByUserIdAndExerciseDateBetween(userId, startDate, endDate);
-        return records.stream().mapToInt(ExerciseRecord::getTimeSpent).sum();
+        List<Exercise> records = exerciseRecordRepository.findByUserIdAndExerciseDateBetween(userId, startDate, endDate);
+        return records.stream().mapToInt(Exercise::getTimeSpent).sum();
     }
 }
