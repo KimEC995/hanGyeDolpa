@@ -19,6 +19,9 @@ public class Exercise {
     @Column(name = "CLIMB_NO")
     private Long id;
 
+    @Column(name = "EXERCISE_TYPE", nullable = false)
+    private String exerciseType;
+
     @Column(name = "CLIMB_DATE", nullable = false)
     private LocalDate exerciseDate;
 
@@ -42,7 +45,8 @@ public class Exercise {
     private User user;
 
     // Constructor for easier instantiation
-    public Exercise(String location, LocalDate exerciseDate, int difficulty, int count, int calories, int timeSpent, User user) {
+    public Exercise(String exerciseType, String location, LocalDate exerciseDate, int difficulty, int count, int calories, int timeSpent, User user) {
+    	this.exerciseType = exerciseType;
         this.exerciseDate = exerciseDate;
         this.location = location;
         this.difficulty = difficulty;
@@ -50,8 +54,10 @@ public class Exercise {
         this.calories = calories;
         this.timeSpent = timeSpent;
         this.user = user; // 사용자 정보
+        // exerciseType은 필요하다면 추가 필드로 저장하는 로직을 구현
     }
 }
+
 
 
 

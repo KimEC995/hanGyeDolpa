@@ -31,6 +31,7 @@ public class ExerciseController {
             LocalDate exerciseDate = LocalDate.parse((String) payload.get("exerciseDate"));
             String location = (String) payload.get("location");
             int difficulty = getIntFromPayload(payload, "difficulty");
+            int count = getIntFromPayload(payload, "count");
             int calories = getIntFromPayload(payload, "calories");
             int timeSpent = getIntFromPayload(payload, "timeSpent");
             Long userId = getLongFromPayload(payload, "userId");
@@ -40,7 +41,7 @@ public class ExerciseController {
                 return ResponseEntity.badRequest().body(Map.of("message", "유효하지 않은 사용자입니다."));
             }
 
-            Exercise record = new Exercise(location, exerciseDate, difficulty, 0, calories, timeSpent, user);
+            Exercise record = new Exercise(exerciseType, location, exerciseDate, difficulty, count, calories, timeSpent, user);
             Exercise savedRecord = exerciseService.addExerciseRecord(record);
 
             return ResponseEntity.status(HttpStatus.CREATED)

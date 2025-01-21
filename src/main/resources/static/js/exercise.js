@@ -42,13 +42,13 @@ function loadCalendar() {
         }
 
         // 선택된 날짜 강조
-        if (selectedDate && date === selectedDate.getDate() && year === selectedDate.getFullYear() && month === selectedDate.getMonth()) {
+        if (selectedDate && (date + 1) === selectedDate.getDate() && year === selectedDate.getFullYear() && month === selectedDate.getMonth()) {
             dayDiv.classList.add('selected');
         }
 
         // 날짜 선택 시 호출
         dayDiv.onclick = () => {
-            selectDate(year, month, date); // 날짜 선택
+            selectDate(year, month, date + 1); // 날짜 선택
             loadExerciseRecords(); // 기록 로드
         };
 
@@ -69,8 +69,9 @@ async function loadExerciseRecords() {
         recordsDiv.innerHTML = '<p>날짜를 선택하세요.</p>';
         return;
     }
-
+	
     const date = selectedDate.toISOString().split('T')[0];
+	console.log(date);
     const userId = 1; // 사용자 ID (적절히 설정)
 
     try {
@@ -78,6 +79,7 @@ async function loadExerciseRecords() {
         if (!response.ok) throw new Error('기록 불러오기 실패');
 
         const records = await response.json();
+		
         if (records.length === 0) {
             recordsDiv.innerHTML = '<p>운동 기록이 없습니다.</p>';
         } else {
