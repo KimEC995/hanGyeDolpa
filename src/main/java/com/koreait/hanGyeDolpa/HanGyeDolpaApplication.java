@@ -9,7 +9,5 @@ public class HanGyeDolpaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HanGyeDolpaApplication.class, args);
-		
 	}
-
 }
