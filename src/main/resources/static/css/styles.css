@@ -75,6 +75,12 @@ section {
     border-radius: 5px; /* 모서리 둥글게 */
 }
 
+.selected {
+    background-color: #6a5acd; /* 선택한 날짜 색칠 */
+    color: #fff; /* 텍스트 색상 */
+    border-radius: 5px; /* 모서리 둥글게 */
+}
+
 .day:hover {
     background-color: #e0e0e0;
 }

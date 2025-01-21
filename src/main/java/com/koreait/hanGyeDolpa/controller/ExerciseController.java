@@ -52,16 +52,17 @@ public class ExerciseController {
     }
 
     @GetMapping("/records")
-    public ResponseEntity<List<Exercise>> getExerciseRecords(@RequestParam String date) {
+    public ResponseEntity<List<Exercise>> getExerciseRecords(@RequestParam String date, @RequestParam Long userId) {
         try {
-            LocalDate localDate = LocalDate.parse(date);
-            List<Exercise> exerciseRecords = exerciseService.findByDate(localDate);
-            return ResponseEntity.ok(exerciseRecords);
+            LocalDate localDate = LocalDate.parse(date); // 요청 날짜 파싱
+            List<Exercise> exerciseRecords = exerciseService.getExerciseRecords(userId, localDate);
+            return ResponseEntity.ok(exerciseRecords); // 운동 기록 반환
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(null); // 오류 응답
         }
     }
+
 
     private int getIntFromPayload(Map<String, Object> payload, String key) {
         Object value = payload.get(key);

@@ -1,49 +1,50 @@
+// 운동 기록 등록 함수
+document.addEventListener("DOMContentLoaded", () => {
+    const dateField = document.getElementById("exercise-date");
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedDate = urlParams.get("date");
+
+    if (selectedDate) {
+        dateField.value = selectedDate; // URL의 날짜를 설정
+    }
+});
+
 async function submitExerciseRecord(event) {
-    event.preventDefault(); // 기본 폼 제출 방지
+    event.preventDefault();
 
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries()); // FormData를 일반 객체로 변환
+    const data = Object.fromEntries(formData.entries());
 
     const payload = {
-        exerciseType: data.exerciseType, // 운동 종류
-        exerciseDate: data.exerciseDate, // 운동 날짜
-        location: data.location,          // 운동 장소
-        difficulty: parseInt(data.difficulty), // 운동 난이도
-        count: parseInt(data.count),      // 시도 횟수
-        calories: parseInt(data.calories), // 소모 칼로리
-        timeSpent: parseInt(data.timeSpent), // 운동 시간
-        userId: parseInt(data.userId),    // 사용자 ID
+        exerciseType: data.exerciseType,
+        exerciseDate: data.exerciseDate,
+        location: data.location,
+        difficulty: parseInt(data.difficulty),
+        count: parseInt(data.count),
+        calories: parseInt(data.calories),
+        timeSpent: parseInt(data.timeSpent),
+        userId: parseInt(data.userId),
     };
-
-    // 디버깅: payload 출력
-    console.log("전송할 데이터:", payload);
 
     try {
         const response = await fetch('/api/exercise/add', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
         });
 
         if (response.ok) {
             const responseData = await response.json();
-            alert(responseData.message); // 성공 메시지 표시
-            
-            // 운동 기록 목록 페이지로 이동하면서 날짜 전달
-            window.location.href = `/exercise?date=${payload.exerciseDate}`; // 선택한 날짜로 이동
-            
+            alert(responseData.message);
+            window.location.href = `/exercise?date=${payload.exerciseDate}`;
         } else {
             const errorData = await response.json();
-            alert('운동 기록 등록에 실패했습니다: ' + errorData.message);
+            alert('등록 실패: ' + errorData.message);
         }
     } catch (error) {
         alert('네트워크 오류: ' + error.message);
     }
 }
-
-
 
 
 
