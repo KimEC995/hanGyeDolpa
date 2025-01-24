@@ -52,11 +52,11 @@ public class mapAPIController {
 		String reqUrl = KAKAO_API_URL +
         		"?page=1" +
         		"&size=15" +
-        		"&sort=accuracy" +
+        		"&sort=distance" +
                 "&query=" + getSearchKeyWord +
                 "&y=37.511509999823645" +   // 중심 좌표 위도(이후 변수화?)
                 "&x=126.9172826071842" +   // 중심 좌표 경도(이후 변수화?)
-                "&radius=20000";
+                "&radius=20000";	//0~20000(m)
 				;
 				
 		log.info("Request URL: {}", reqUrl);

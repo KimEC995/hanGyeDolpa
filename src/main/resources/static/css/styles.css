@@ -1,8 +1,19 @@
+/*
+* README!!!!
+* 매우 중요)CSS는 충돌의 우려가 매우 강하니, 가능한 스코프를 좁혀주세요!!!!!!!!!!!!!!!!!
+*
+* 하단 부터는 예시입니다. 하단에 계속 추가해주세요.(혹은 중간 수정 필요시 수정0)
+* 주석을 복사해 내용을 기입하세요.
+* EX) 대시보드의 css이다 -> ----------- 대시보드의 어떤 부분/그냥 대시보드
+*
+* 색깔 부분은 28번 줄 부터 변수로 지정했습니다. var(--이름) 형태로 사용하세요 -> rgba값은 유지보수가 힘듭니다
+* EX) 43번 줄 확인
+*/
+
 /*------------------------------------------------- 전체 적용 */
 
 body{
     font-family: "Noto Sans KR";
-    
 }
 
 a{
@@ -15,7 +26,7 @@ a{
 
 /*======= 색 */
 :root {
-  --maincolor : rgba(119, 48, 174, 1); 	 /*진한 보라색*/
+  --maincolor : rgba(119, 48, 174, 1);   /*진한 보라색*/
   --subColor01 : rgba(229, 195, 255, 1); /*연한 보라색*/
   --subColor02 : rgba(229, 195, 255, 1); /*노란색*/
   --subColor03 : rgba(126, 104, 142, 1); /*어두운 보라색*/
@@ -129,7 +140,7 @@ a{
 	color: var(--fontColor);
 }
 
-/*-------------------------------- 아래 알 수 없는 것 관련*/
+/*-------------------------------- 아래 알 수 없는 것 관련: 나중에 물어보기*/
 #unKnownThings{
 	width: 100%;
 	margin: 2%;
@@ -140,7 +151,6 @@ a{
 	width: 200px;
 	height: 200px;
 }
-
 
 /*------------------------------------------------- foot 페이지 */
 
@@ -178,3 +188,49 @@ a{
 	text-align:left;
 	width:80%;
 }
+
+/*------------------------------------------------- 지도 페이지 */
+/* #mapService를 flex로 설정하여 왕 가로로 배치 */
+#mapService {
+    display: flex;
+    width: 100%;
+    height: 600px; /* 전체 높이인데.. 변경 가능할지도도 */
+    gap: 10px;
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+}
+
+/* 지도 영역 - 카카오쪽과 연동되니 수정시 주의 요망 */
+.map_wrap {
+    flex: 1; /* 나머지 공간 다먹기 */
+    height: 100%;
+    position: relative;
+}
+
+#clickedPlace {
+    flex: 1; /* 같은너비 */
+    height: 100%;
+}
+
+ #reFreshBtnDiv {
+     position: absolute;
+     bottom: 10px;
+     right: 10px;
+     z-index: 10;
+ }
+ 
+ #reFreshBtn{
+ 	width: 50px;
+ 	height: 50px;
+ 	opacity: 70%;
+ 	font-size: 13px;
+ }
+
+ #reSearchAdd{
+ 	margin-top: 10px;
+ 	width: 50px;
+ 	height: 50px;
+ 	opacity: 70%;
+ 	font-size: 13px;
+ }
+
+/*하단에 계속 추가*/
