@@ -30,16 +30,21 @@ public class mapAPIController {
 	// 마커 누르면 호출
 	@ResponseBody
 	@GetMapping("/clickMarker")
-	public String clickMarker(String placeName) {
-		log.info("placeName: "+placeName);
+	public String clickMarker(String placeName, double Xposition, double Yposition) {
+		log.info("placeName: "+placeName + " Xposition: " + Xposition + " Yposition: " + Yposition);
 		
-		String placeUrl = getPlaceID(placeName);
+//		if(Xposition == Double.NaN || Yposition == Double.NaN) {
+//			Xposition = 37.500725285;
+//			Yposition = 127.036600396;
+//		}
+		
+		String placeUrl = getPlaceID(placeName, Xposition, Yposition);
 		
 		return placeUrl;
 	}
 	
 	// 이름 매칭 ID 가져오기
-	private String getPlaceID(String placeName) {
+	private String getPlaceID(String placeName, double Xposition, double Yposition) {
 		
 		String placeID = "http://place.map.kakao.com/";
 		
@@ -51,13 +56,12 @@ public class mapAPIController {
 		String getSearchKeyWord = placeName;
 		String reqUrl = KAKAO_API_URL +
         		"?page=1" +
-        		"&size=15" +
-        		"&sort=distance" +
+        		"&size=10" + //일단 동일값 10개 받기 -> 어케 처리할까
+        		"&sort=accuracy" +
                 "&query=" + getSearchKeyWord +
-                "&y=37.511509999823645" +   // 중심 좌표 위도(이후 변수화?)
-                "&x=126.9172826071842" +   // 중심 좌표 경도(이후 변수화?)
-                "&radius=20000";	//0~20000(m)
-				;
+                "&y=" + Yposition +
+                "&x=" + Xposition
+                ;
 				
 		log.info("Request URL: {}", reqUrl);
 		
