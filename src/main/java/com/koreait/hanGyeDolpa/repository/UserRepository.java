@@ -1,10 +1,12 @@
 package com.koreait.hanGyeDolpa.repository;
 
-import com.koreait.hanGyeDolpa.entity.User_Table;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.koreait.hanGyeDolpa.entity.User;
+
 @Repository
-public interface UserRepository extends JpaRepository<User_Table, Long> {
-	User_Table findByUserId(String uid);
+public interface UserRepository extends JpaRepository<User, Long> {
+	
+	User findByUsername(String username);
 }

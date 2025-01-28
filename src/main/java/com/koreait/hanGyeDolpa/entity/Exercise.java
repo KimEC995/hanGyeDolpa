@@ -1,30 +1,21 @@
 package com.koreait.hanGyeDolpa.entity;
 
-import java.time.LocalDate;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "EXERCISE_TABLE")
-public class Exercise_Table {
+@Table(name = "EXERCISE")
+public class Exercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
-    @Column(name = "USER_NO")
-    private Long uid;
-    
     @Column(name = "CLIMB_NO")
     private Long id;
 
@@ -38,21 +29,30 @@ public class Exercise_Table {
     private int difficulty;
 
     @Column(name = "CLIMB_COUNT", nullable = false)
-    private int count;
+    private int count; // 운동 횟수
 
     @Column(name = "CLIMB_CALORIES", nullable = false)
     private int calories;
 
     @Column(name = "CLIMB_TIME", nullable = false)
-    private int timeSpent;
+    private int timeSpent; // 운동 시간 (분)
+
+    @ManyToOne
+    @JoinColumn(name = "USER_NO", nullable = false)
+    private User user;
 
     // Constructor for easier instantiation
-    public Exercise_Table(LocalDate exerciseDate, String location, int difficulty, int count, int calories, int timeSpent) {
+    public Exercise(String location, LocalDate exerciseDate, int difficulty, int count, int calories, int timeSpent, User user) {
         this.exerciseDate = exerciseDate;
         this.location = location;
         this.difficulty = difficulty;
-        this.count = count;
+        this.count = count; // 운동 횟수
         this.calories = calories;
         this.timeSpent = timeSpent;
+        this.user = user; // 사용자 정보
     }
 }
+
+
+
+
