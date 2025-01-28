@@ -1,9 +1,7 @@
 package com.koreait.hanGyeDolpa.controller;
 
-import com.koreait.hanGyeDolpa.entity.Exercise;
-import com.koreait.hanGyeDolpa.entity.User;
+import com.koreait.hanGyeDolpa.entity.Exercise_Table;
 import com.koreait.hanGyeDolpa.service.ExerciseService;
-import com.koreait.hanGyeDolpa.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,32 +15,24 @@ import java.util.List;
 public class ExerciseController {
 
     private final ExerciseService exerciseService;
-    private final UserService userService;
 
-    public ExerciseController(ExerciseService exerciseService, UserService userService) {
+    public ExerciseController(ExerciseService exerciseService) {
         this.exerciseService = exerciseService;
-        this.userService = userService;
     }
 
     @PostMapping("/add")
     public ResponseEntity<Object> addExerciseRecord(@RequestBody Map<String, Object> payload) {
         try {
-            String exerciseType = (String) payload.get("exerciseType");
             LocalDate exerciseDate = LocalDate.parse((String) payload.get("exerciseDate"));
             String location = (String) payload.get("location");
             int difficulty = getIntFromPayload(payload, "difficulty");
             int count = getIntFromPayload(payload, "count");
             int calories = getIntFromPayload(payload, "calories");
             int timeSpent = getIntFromPayload(payload, "timeSpent");
-            Long userId = getLongFromPayload(payload, "userId");
 
-            User user = userService.findById(userId);
-            if (user == null) {
-                return ResponseEntity.badRequest().body(Map.of("message", "유효하지 않은 사용자입니다."));
-            }
-
-            Exercise record = new Exercise(exerciseType, location, exerciseDate, difficulty, count, calories, timeSpent, user);
-            Exercise savedRecord = exerciseService.addExerciseRecord(record);
+            // Exercise 객체 생성 및 저장
+            Exercise_Table record = new Exercise_Table(exerciseDate, location, difficulty, count, calories, timeSpent);
+            Exercise_Table savedRecord = exerciseService.addExerciseRecord(record);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Map.of("message", "운동 기록이 성공적으로 등록되었습니다.", "id", savedRecord.getId()));
@@ -53,17 +43,37 @@ public class ExerciseController {
     }
 
     @GetMapping("/records")
-    public ResponseEntity<List<Exercise>> getExerciseRecords(@RequestParam String date, @RequestParam Long userId) {
+    public ResponseEntity<List<Exercise_Table>> getExerciseRecords(@RequestParam String date) {
         try {
-            LocalDate localDate = LocalDate.parse(date); // 요청 날짜 파싱
-            List<Exercise> exerciseRecords = exerciseService.getExerciseRecords(userId, localDate);
-            return ResponseEntity.ok(exerciseRecords); // 운동 기록 반환
+            LocalDate localDate = LocalDate.parse(date);
+            List<Exercise_Table> exerciseRecords = exerciseService.getExerciseRecords(localDate);
+            return ResponseEntity.ok(exerciseRecords);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(null); // 오류 응답
+            return ResponseEntity.badRequest().body(null);
         }
     }
+    
+    @GetMapping("/records/month")
+    public ResponseEntity<Map<String, Integer>> getMonthlyStats(@RequestParam String month) {
+        try {
+            LocalDate startDate = LocalDate.parse(month + "-01");
+            LocalDate endDate = startDate.plusMonths(1).minusDays(1);
 
+            // Service를 통해 운동 기록 조회
+            List<Exercise_Table> records = exerciseService.getExerciseRecordsBetween(startDate, endDate);
+
+            // 총 칼로리와 총 시간 계산
+            int totalCalories = records.stream().mapToInt(Exercise_Table::getCalories).sum();
+            int totalTime = records.stream().mapToInt(Exercise_Table::getTimeSpent).sum();
+
+            // 결과 반환
+            return ResponseEntity.ok(Map.of("calories", totalCalories, "time", totalTime));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
     private int getIntFromPayload(Map<String, Object> payload, String key) {
         Object value = payload.get(key);
@@ -74,16 +84,8 @@ public class ExerciseController {
         }
         throw new IllegalArgumentException(key + " 값이 유효하지 않습니다.");
     }
-
-    private Long getLongFromPayload(Map<String, Object> payload, String key) {
-        Object value = payload.get(key);
-        if (value instanceof Number) {
-            return ((Number) value).longValue();
-        } else if (value instanceof String) {
-            return Long.parseLong((String) value);
-        }
-        throw new IllegalArgumentException(key + " 값이 유효하지 않습니다.");
-    }
 }
+
+
 
 

@@ -86,6 +86,21 @@ section {
     margin-left: 20px; /* 달력과의 간격 */
 }
 
+/* 운동 기록을 가로로 배치하기 위한 CSS */
+#records-container {
+            display: flex; /* 가로 방향으로 배치 */
+            flex-wrap: wrap; /* 여러 줄로 감싸기 */
+            gap: 20px; /* 기록 간의 간격 */
+}
+
+.record-item {
+            border: 1px solid #ccc; /* 테두리 */
+            padding: 10px; /* 패딩 */
+            border-radius: 5px; /* 모서리 둥글게 */
+            width: calc(45% - 20px); /* 두 개의 아이템이 한 줄에 들어가도록 폭 조절 */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}        
+
 /* 대시보드로 돌아가기 버튼 스타일 */
 .back-button {
     background: none;
@@ -106,7 +121,7 @@ section {
 /* 히트맵 컨테이너 스타일 */
 #commit-heatmap {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 일주일(7일) 열 */
+    grid-template-columns: repeat(8, 1fr); /* 1열은 월, 7열은 요일 */
     gap: 4px;
     margin-top: 20px;
 }
@@ -124,6 +139,25 @@ section {
 .heatmap-day.present {
     background-color: #239a3b; /* 출석한 날 */
 }
+
+/* 결석 상태 (색칠 X) */
+.heatmap-day.absent {
+    background-color: #ebedf0; /* 결석한 날 */
+}
+
+/* 월 레이블 스타일 */
+.month-label {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* 요일 레이블 스타일 */
+.week-label {
+    font-weight: bold;
+    text-align: center;
+}
+
 
 
 

@@ -11,16 +11,17 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "EXERCISE")
-public class Exercise {
+@Table(name = "EXERCISE_TABLE")
+public class Exercise_Table {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    @Column(name = "USER_NO")
+    private Long uid;
+    
     @Column(name = "CLIMB_NO")
     private Long id;
-
-    @Column(name = "EXERCISE_TYPE", nullable = false)
-    private String exerciseType;
 
     @Column(name = "CLIMB_DATE", nullable = false)
     private LocalDate exerciseDate;
@@ -32,33 +33,21 @@ public class Exercise {
     private int difficulty;
 
     @Column(name = "CLIMB_COUNT", nullable = false)
-    private int count; // 운동 횟수
+    private int count;
 
     @Column(name = "CLIMB_CALORIES", nullable = false)
     private int calories;
 
     @Column(name = "CLIMB_TIME", nullable = false)
-    private int timeSpent; // 운동 시간 (분)
-
-    @ManyToOne
-    @JoinColumn(name = "USER_NO", nullable = false)
-    private User user;
+    private int timeSpent;
 
     // Constructor for easier instantiation
-    public Exercise(String exerciseType, String location, LocalDate exerciseDate, int difficulty, int count, int calories, int timeSpent, User user) {
-    	this.exerciseType = exerciseType;
+    public Exercise_Table(LocalDate exerciseDate, String location, int difficulty, int count, int calories, int timeSpent) {
         this.exerciseDate = exerciseDate;
         this.location = location;
         this.difficulty = difficulty;
-        this.count = count; // 운동 횟수
+        this.count = count;
         this.calories = calories;
         this.timeSpent = timeSpent;
-        this.user = user; // 사용자 정보
-        // exerciseType은 필요하다면 추가 필드로 저장하는 로직을 구현
     }
 }
-
-
-
-
-

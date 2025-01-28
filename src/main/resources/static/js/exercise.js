@@ -1,4 +1,3 @@
-// exercise.js
 let currentDate = new Date();
 const calendarTitle = document.getElementById("calendar-title");
 const calendarDays = document.getElementById("calendar-days");
@@ -42,13 +41,13 @@ function loadCalendar() {
         }
 
         // 선택된 날짜 강조
-        if (selectedDate && (date + 1) === selectedDate.getDate() && year === selectedDate.getFullYear() && month === selectedDate.getMonth()) {
+        if (selectedDate && date === selectedDate.getDate() && year === selectedDate.getFullYear() && month === selectedDate.getMonth()) {
             dayDiv.classList.add('selected');
         }
 
         // 날짜 선택 시 호출
         dayDiv.onclick = () => {
-            selectDate(year, month, date + 1); // 날짜 선택
+            selectDate(year, month, date); // 날짜 선택
             loadExerciseRecords(); // 기록 로드
         };
 
@@ -57,7 +56,7 @@ function loadCalendar() {
 }
 
 function selectDate(year, month, date) {
-    selectedDate = new Date(year, month, date);
+    selectedDate = new Date(year, month, date); // 로컬 시간대로 설정
     loadCalendar(); // 달력 다시 로드하여 선택된 날짜 강조
 }
 
@@ -69,31 +68,32 @@ async function loadExerciseRecords() {
         recordsDiv.innerHTML = '<p>날짜를 선택하세요.</p>';
         return;
     }
-	
-    const date = selectedDate.toISOString().split('T')[0];
-	console.log(date);
-    const userId = 1; // 사용자 ID (적절히 설정)
+
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const date = `${year}-${month}-${day}`;
 
     try {
-        const response = await fetch(`/api/exercise/records?date=${date}&userId=${userId}`);
+        const response = await fetch(`/api/exercise/records?date=${date}`);
         if (!response.ok) throw new Error('기록 불러오기 실패');
 
         const records = await response.json();
-		
+
         if (records.length === 0) {
             recordsDiv.innerHTML = '<p>운동 기록이 없습니다.</p>';
         } else {
             records.forEach(record => {
                 const recordElement = document.createElement('div');
+                recordElement.className = 'record-item'; // 클래스 추가
                 recordElement.innerHTML = `
-                    <strong>운동 종류:</strong> ${record.exerciseType}<br>
                     <strong>운동 장소:</strong> ${record.location}<br>
                     <strong>난이도:</strong> ${record.difficulty}<br>
                     <strong>시도 횟수:</strong> ${record.count}<br>
                     <strong>소모 칼로리:</strong> ${record.calories} kcal<br>
                     <strong>운동 시간:</strong> ${Math.floor(record.timeSpent / 60)}시간 ${record.timeSpent % 60}분<br>
                 `;
-                recordsDiv.appendChild(recordElement);
+                recordsDiv.appendChild(recordElement); // 각 기록을 화면에 추가
             });
         }
     } catch (error) {
@@ -101,6 +101,9 @@ async function loadExerciseRecords() {
     }
 }
 
+
+
+// 이전/다음 월 버튼
 document.getElementById("prev-month-btn").onclick = () => {
     currentDate.setMonth(currentDate.getMonth() - 1);
     loadCalendar();
@@ -111,7 +114,25 @@ document.getElementById("next-month-btn").onclick = () => {
     loadCalendar();
 };
 
+// "운동 기록하기" 버튼 클릭 시 선택한 날짜 전달
+document.querySelector(".record-button").onclick = () => {
+    if (!selectedDate) {
+        alert("날짜를 선택해주세요!");
+        return;
+    }
+
+    // 로컬 시간대 기준으로 YYYY-MM-DD 형식 변환
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const day = String(selectedDate.getDate()).padStart(2, '0');
+    const date = `${year}-${month}-${day}`;
+
+    location.href = `/exercise/add?date=${date}`;
+};
+
+// 초기 로드
 window.onload = () => {
     loadCalendar();
     loadExerciseRecords();
 };
+

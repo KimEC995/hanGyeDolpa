@@ -16,14 +16,13 @@ async function submitExerciseRecord(event) {
     const data = Object.fromEntries(formData.entries());
 
     const payload = {
-        exerciseType: data.exerciseType,
+		userno : data.userno,
         exerciseDate: data.exerciseDate,
         location: data.location,
         difficulty: parseInt(data.difficulty),
         count: parseInt(data.count),
         calories: parseInt(data.calories),
         timeSpent: parseInt(data.timeSpent),
-        userId: parseInt(data.userId),
     };
 
     try {
@@ -45,6 +44,7 @@ async function submitExerciseRecord(event) {
         alert('네트워크 오류: ' + error.message);
     }
 }
+
 
 
 

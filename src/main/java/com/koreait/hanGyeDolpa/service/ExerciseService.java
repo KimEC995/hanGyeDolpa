@@ -1,6 +1,6 @@
 package com.koreait.hanGyeDolpa.service;
 
-import com.koreait.hanGyeDolpa.entity.Exercise;
+import com.koreait.hanGyeDolpa.entity.Exercise_Table;
 import com.koreait.hanGyeDolpa.repository.ExerciseRecordRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +16,21 @@ public class ExerciseService {
         this.exerciseRecordRepository = exerciseRecordRepository;
     }
 
-    public List<Exercise> getExerciseRecords(Long userId, LocalDate date) {
-        return exerciseRecordRepository.findByUserIdAndExerciseDate(userId, date);
-    }
-
-    public Exercise addExerciseRecord(Exercise record) {
-        return exerciseRecordRepository.save(record);
-    }
-
-    // 날짜로 운동 기록 조회 메서드 추가
-    public List<Exercise> findByDate(LocalDate date) {
+    // 특정 날짜의 운동 기록 조회
+    public List<Exercise_Table> getExerciseRecords(LocalDate date) {
         return exerciseRecordRepository.findByExerciseDate(date);
     }
+
+    // 특정 날짜 범위의 운동 기록 조회
+    public List<Exercise_Table> getExerciseRecordsBetween(LocalDate startDate, LocalDate endDate) {
+        return exerciseRecordRepository.findByExerciseDateBetween(startDate, endDate);
+    }
+
+    // 운동 기록 추가
+    public Exercise_Table addExerciseRecord(Exercise_Table record) {
+        return exerciseRecordRepository.save(record);
+    }
 }
+
+
 

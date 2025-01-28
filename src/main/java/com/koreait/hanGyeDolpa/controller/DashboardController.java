@@ -20,16 +20,23 @@ public class DashboardController {
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<int[]> getMonthlyStats(@RequestParam Long userId, @RequestParam String month) {
+    public ResponseEntity<int[]> getMonthlyStats(@RequestParam String month) {
         try {
+            // 해당 월의 시작 날짜와 마지막 날짜 계산
             LocalDate startDate = LocalDate.parse(month + "-01");
             LocalDate endDate = startDate.plusMonths(1).minusDays(1);
-            int totalCalories = dashboardService.calculateTotalCalories(userId, startDate, endDate);
-            int totalTime = dashboardService.calculateTotalTime(userId, startDate, endDate);
+
+            // 총 칼로리와 총 시간 계산
+            int totalCalories = dashboardService.calculateTotalCalories(startDate, endDate);
+            int totalTime = dashboardService.calculateTotalTime(startDate, endDate);
+
+            // 결과 반환
             return new ResponseEntity<>(new int[]{totalCalories, totalTime}, HttpStatus.OK);
         } catch (Exception e) {
+            // 오류 발생 시 BAD_REQUEST 반환
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }
+
 
