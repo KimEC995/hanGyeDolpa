@@ -79,6 +79,13 @@
 		// 처음 지도 생성
 		var map = new kakao.maps.Map(mapContainer, defaultOption); 
 		
+		// 마커 관련
+		// var centerMarker = new kakao.maps.Marker({
+		//    map: map,
+		//    position: new kakao.maps.LatLng(map.getCenter())
+		//});
+		//markers.push(centerMarker);
+		
 		// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 		var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 		
@@ -91,7 +98,7 @@
 			var ps = new kakao.maps.services.Places(map);
 			
 			// 지도 범위 재설정
-			map.relayout();
+			//map.relayout();
 			
 			// 장소 검색 옵션(추가중)
 			let NLevel = map.getLevel();
@@ -152,14 +159,16 @@
 		        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
 		            marker = addMarker(placePosition, i), 
 		            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-		
-		        // 마커들 한눈에 보이게
-		        bounds.extend(placePosition);
-		        
-		        if(i == 0){
+				
+		        // 중심 마커 설정 및 
+	            if(i == 0){
+	            	//중심 latlng 객체
 		        	marke0Center = marker.getPosition();
 		        }
-		            
+
+		        // 마커 바운드
+		        bounds.extend(placePosition);
+		        
 		        // 마커와 검색결과 항목에 mouseover 했을때
 		        // 해당 장소에 인포윈도우에 장소명을 표시합니다
 		        // mouseout 했을 때는 인포윈도우를 닫습니다
@@ -340,11 +349,7 @@
 		        
 		        clickedPlaceDiv.innerHTML = iframeStr;
 		        
-		        // 새 창 띄우기(확인용..?)
-		        //window.open(data);
-		        
-		        flag = true;
-		 		resizeMapDiv();
+		        makeHalfMap();
 		    })
 		    .catch(error => console.error('Error:', error));
 		 }
@@ -361,9 +366,6 @@
 		        
 		        // 버튼 활성화
 		        document.getElementById("reSizingBtn").style.visibility = "visible";
-		    
-		        // 지도 사이즈 바뀔 때 마다 중심 좌표 재설정
-		        map.relayout();
 		        
 		    } else {
 		        // 지도만 100
@@ -381,6 +383,14 @@
 			 console.log("왕지도 버튼 ON");
 			 flag = false;
 			 resizeMapDiv();
+			 map.relayout();
+		 }
+		 
+		 function makeHalfMap(){
+			 console.log("작은지도 ON");
+			 flag = true;
+			 resizeMapDiv();
+			 map.relayout();
 		 }
 		 
 		 // 지도 중심 좌표 옮기고 재검색
