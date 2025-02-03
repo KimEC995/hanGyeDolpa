@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.koreait.hanGyeDolpa.dto.checkDataForCalendar;
-import com.koreait.hanGyeDolpa.service.DashBoardService;
+import com.koreait.hanGyeDolpa.service.DashboardService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DashboardRestController {
 
 	@Autowired
-	private DashBoardService dashbService;
+	private DashboardService dashbService;
 	
 	@GetMapping("/getCalendarData")
 	public List<checkDataForCalendar> getCalendarData(

@@ -33,7 +33,8 @@ public class ExerciseController {
         record.setClimbCount(request.getExerciseCount());
         record.setClimbTime(request.getExerciseTime());
         record.setExerciseDate(request.getExerciseDate());
-
+        record.setClimbKcal(request.getExerciseKcal());
+        
         exerciseRepository.save(record);
         return ResponseEntity.ok("운동 기록이 저장되었습니다!");
     }

@@ -13,7 +13,7 @@ import com.koreait.hanGyeDolpa.entity.Exercise;
 import com.koreait.hanGyeDolpa.repository.ExerciseRepository;
 
 @Service
-public class DashBoardService {
+public class DashboardService {
 
 	@Autowired
 	private ExerciseRepository exRepo;

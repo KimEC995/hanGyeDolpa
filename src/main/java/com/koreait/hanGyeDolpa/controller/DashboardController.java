@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("")
-public class DashBoardController {
+public class DashboardController {
 	
 	@GetMapping("login")
 	public void login() {

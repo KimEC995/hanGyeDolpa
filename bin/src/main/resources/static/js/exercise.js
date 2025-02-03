@@ -1,30 +1,24 @@
-// 현재 연도와 월을 전역 변수로 관리
-let currentYear = new Date().getFullYear();
-let currentMonth = new Date().getMonth();
-let selectedDate = null; // 선택된 날짜를 저장하는 변수 (선택 유지 X)
+// 현재 연도와 월을 전역 변수로 관리 [수정됨]
+let currentYear = new Date().getFullYear(); // [수정됨]
+let currentMonth = new Date().getMonth(); // 0부터 시작 (0: 1월, 11: 12월) [수정됨]
 
-// 날짜를 YYYY-MM-DD 형식으로 변환하는 함수 (UTC 문제 해결)
-function formatDateToYYYYMMDD(year, month, date) {
-    const localDate = new Date(year, month, date);
-    const yyyy = localDate.getFullYear();
-    const mm = String(localDate.getMonth() + 1).padStart(2, '0'); // 월 (2자리)
-    const dd = String(localDate.getDate()).padStart(2, '0'); // 일 (2자리)
-    return `${yyyy}-${mm}-${dd}`;
-}
-
-// 달력 로드 함수
+// 달력 생성 함수
 function loadCalendar() {
     const calendarTitle = document.getElementById("calendar-title");
     const calendarDays = document.getElementById("calendar-days");
+    // onst currentDate = new Date();
+    // const year = currentDate.getFullYear();
+    // const month = currentDate.getMonth();
 
-    calendarTitle.innerText = `${currentYear}년 ${currentMonth + 1}월`;
+    // 달력 제목 설정
+    calendarTitle.innerText = `${currentYear}년 ${currentMonth + 1}월`; // [수정됨]
 
     // 달력 초기화
     calendarDays.innerHTML = '';
 
     // 월의 첫 번째 날과 마지막 날 계산
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-    const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+	const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // [수정됨]
+    const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate(); // [수정됨]
 
     // 오늘 날짜 구하기
     const today = new Date();
@@ -34,7 +28,7 @@ function loadCalendar() {
 
     // 새로고침 시 오늘 날짜를 자동 선택
     if (selectedDate === null) {
-        selectedDate = formatDateToYYYYMMDD(todayYear, todayMonth, todayDate);
+        selectedDate = new Date(todayYear, todayMonth, todayDate).toISOString().split('T')[0];
     }
 
     // 빈 칸 추가 (첫 주의 시작 요일까지)
@@ -50,7 +44,7 @@ function loadCalendar() {
         dayDiv.innerText = date;
 
         // 현재 날짜의 YYYY-MM-DD 포맷 생성
-        const formattedDate = formatDateToYYYYMMDD(currentYear, currentMonth, date);
+        const formattedDate = new Date(Date.UTC(currentYear, currentMonth, date)).toISOString().split('T')[0];
 
         // 오늘 날짜 강조 (새로고침할 때마다 오늘 날짜가 선택됨)
         if (selectedDate === formattedDate) {
@@ -69,7 +63,7 @@ function loadCalendar() {
 // 날짜 선택 함수
 function selectDate(formattedDate) {
     selectedDate = formattedDate; // 새로운 선택된 날짜 저장
-    sessionStorage.setItem("selectedDate", selectedDate); // sessionStorage에 저장
+	sessionStorage.setItem("selectedDate", selectedDate); // sessionStorage에 저장
     loadCalendar();  // 달력 다시 로드하여 선택한 날짜만 강조
     loadExerciseRecords();  // 운동 기록 다시 불러오기
 }
@@ -97,6 +91,7 @@ function goToNextMonth() {
     selectedDate = null; // 선택된 날짜 초기화
     loadCalendar();
 }
+
 
 // 운동 기록 불러오기
 async function loadExerciseRecords() {
@@ -140,7 +135,7 @@ async function loadExerciseRecords() {
                     <strong>난이도:</strong> ${record.climbStage}<br>
                     <strong>시도 횟수:</strong> ${record.climbCount}<br>
                     <strong>운동 시간:</strong> ${timeString}<br>
-                    <strong>소모 칼로리:</strong> ${record.climbKcal}kcal<br>
+					<strong>소모 칼로리:</strong> ${record.climbKcal}kcal<br>
                 `;
                 recordsDiv.appendChild(recordElement);
             });

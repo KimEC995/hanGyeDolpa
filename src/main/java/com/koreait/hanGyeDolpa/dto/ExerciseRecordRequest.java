@@ -13,5 +13,6 @@ public class ExerciseRecordRequest {
     private Integer exerciseStage;
     private Integer exerciseCount;
     private Integer exerciseTime;
+    private Integer exerciseKcal;
     
     }

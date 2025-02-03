@@ -42,4 +42,8 @@ public class Exercise {
     @Column(name = "CLIMB_DATE", nullable = false)
     private String exerciseDate;
 
+    @Column(name = "CLIMB_KCAL", nullable = false)
+    private Integer climbKcal;
+
+
 }
