@@ -12,7 +12,10 @@ import com.koreait.hanGyeDolpa.dto.checkDataForCalendar;
 import com.koreait.hanGyeDolpa.entity.Exercise;
 import com.koreait.hanGyeDolpa.repository.ExerciseRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class DashboardService {
 
 	@Autowired
@@ -47,6 +50,8 @@ public class DashboardService {
     //1-2. 이번달 운동 시간 총량
     public Map<String, Map<String, Integer>> getTotlaData(String startDate, String endDate) {
         
+//    	log.info("321");
+    	
     	List<Exercise> exercises = exRepo.findAllByDateRange(startDate, endDate);
 
     	// 월별 그룹
@@ -64,10 +69,12 @@ public class DashboardService {
             // 횟수 | 시간 총합
             int totalClimbCount = monthlyExercises.stream()
                 .mapToInt(Exercise::getClimbCount)
-                .sum();
+                .sum()-1;
             int totalClimbTime = monthlyExercises.stream()
                 .mapToInt(Exercise::getClimbTime)
                 .sum();
+            
+            log.info("================================== > 총횟수: " + totalClimbCount + "| 총시간: " + totalClimbTime);
 
             // 결과 맵에 추가
             Map<String, Integer> resultMap = new HashMap<>();

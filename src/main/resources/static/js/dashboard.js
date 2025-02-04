@@ -14,8 +14,6 @@ function drawChart() {
     loadDifficultyChart();	// 누적 난이도 그래프 로드
 	loadTotalTimeData();	// 이번달 총 운동량
 	loadHighstScoreData();	// 이번달 최고 운동 내용
-	
-	aboutLoadDifficulty();	// 누적난이도 안내 버튼
 }
 
 // ============================= 기준 달 설정
@@ -34,7 +32,6 @@ function loadCurrentMonth(offset){
 	const month = String(now.getMonth() + 1).padStart(2, '0'); // 2자리로 맞추기
 
 	const formattedDate = `${year}-${month}`;
-	
 	
 	return formattedDate;
 }
@@ -114,8 +111,8 @@ function loadDifficultyChart() {
         .then(data => {
             //console.log("콤보 데이터:", data);
 
-            // 총 10다ㅏㄴ계
-            const stages = ['1단계', '2단계', '3단계', '4단계', '5단계', '6단계', '7단계', '8단계', '9단계', '10단계'];
+            // 이제6단계
+            const stages = ['초보(~V0)', '초록(~V2)', '파랑(~V3)', '빨강(~V4)', '보라(~V5)', '고수(V6~)'];
 
             // 월별 데이터 - 정렬(오름차순)
             let chartData = Object.entries(data)
@@ -149,15 +146,15 @@ function loadDifficultyChart() {
 
             // 데이터
             var dataTable = google.visualization.arrayToDataTable([
-                    ['Month', '1단계', '2단계', '3단계', '4단계', '5단계', '6단계', '7단계', '8단계', '9단계', '10단계', '평균레벨'],
+                    ['Month', '초보(~V0)', '초록(~V2)', '파랑(~V3)', '빨강(~V4)', '보라(~V5)', '고수(V6~)', '평균레벨'],
                     ...chartData
                 ]);
                 
             var options = {
                 seriesType: 'bars',
-				//colors: ['7730AE','E5C3FF','FFCD4A','7E688E'],
-				series: {10: {
-					type: 'line',
+				colors: ['FFB327','76C64C','71D2F8','F86470','AA80C6','696969'],
+				series: {6: {
+					type: 'line', 
 					color: '7730AE',
 					lineWidth: 1.5,
 					pointShape: 'round'
@@ -172,32 +169,6 @@ function loadDifficultyChart() {
         .catch(error => console.error("누적난이도에러:", error));
 }
 
-// ============================= 누적 난이도 설명 표
-function aboutLoadDifficulty(){
-	//console.log("123");
-	const showAbout = document.getElementById("aboutDifficulty");
-	
-	//console.log(showAbout);
-	
-	// 마우스 올리면
-	showAbout.addEventListener('mouseover',function(e){
-		//console.log("123"+e);
-		
-	});
-	
-	// 마우스 나가면
-	showAbout.addEventListener('mouseout',function(e){
-		//console.log("456"+e);
-		
-	});
-	
-}
-
-function TestFunction(){
-	//console.log("789");
-}
-
-	
 // ============================= 이번달 총 운동량
 function loadTotalTimeData() {
 	
@@ -235,7 +206,6 @@ function loadTotalTimeData() {
 		    .catch(error => console.error("왼쪽구석에러:", error));
 }
 	
-
 // ============================= 이번달 최고점수
 function loadHighstScoreData() {
 	
@@ -246,6 +216,15 @@ function loadHighstScoreData() {
 	
 	const DataDiv = document.getElementById("monthlyHighstScoreData");
 	
+	const levelMap = {
+	    1: "초보(~V0)",
+	    2: "초록(~V2)",
+	    3: "파랑(~V3)",
+	    4: "빨강(~V4)",
+	    5: "보라(~V5)",
+	    6: "고수(V6~)"
+	};
+	
 	let str = "<h3>이번달 최고 점수(1회당)</h3>";
 	
 	// DB 쿼리문 -> 데이터 호출
@@ -254,8 +233,9 @@ function loadHighstScoreData() {
 	    .then(response => response.json())
 	    .then(data =>{
 				//console.log("123 -> " + str2)
+				const levelText = levelMap[data.stage] || "이번달엔 없나봐요ㅠㅠ";
 				
-				str += "<h4>최고난이도: " + data.stage + " 레벨</h4>";
+				str += "<h4>최고난이도: " + levelText + "</h4>";
 				str += "<h4>최고시간: " + data.time + " 시간</h4>";
 				
 				DataDiv.innerHTML = str;
