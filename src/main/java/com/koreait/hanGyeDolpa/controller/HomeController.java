@@ -20,6 +20,5 @@ public class HomeController {
 	 public String addExercise() {
 	     return "add-exercise"; // add-exercise.html을 반환
 	 }
-
 }
 
