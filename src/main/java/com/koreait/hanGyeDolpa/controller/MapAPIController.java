@@ -17,26 +17,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class mapAPIController {
+public class MapAPIController {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	@GetMapping("locationTest")
-	public String locationTest() {
-		return "Sample_Loacation.html";
-	}
 	
 	// 마커 누르면 호출
 	@ResponseBody
 	@GetMapping("/clickMarker")
 	public String clickMarker(String placeName, double Xposition, double Yposition) {
 		log.info("placeName: "+placeName + " Xposition: " + Xposition + " Yposition: " + Yposition);
-		
-//		if(Xposition == Double.NaN || Yposition == Double.NaN) {
-//			Xposition = 37.500725285;
-//			Yposition = 127.036600396;
-//		}
 		
 		String placeUrl = getPlaceID(placeName, Xposition, Yposition);
 		

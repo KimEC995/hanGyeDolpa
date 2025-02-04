@@ -72,6 +72,10 @@ function selectDate(formattedDate) {
     sessionStorage.setItem("selectedDate", selectedDate); // sessionStorage에 저장
     loadCalendar();  // 달력 다시 로드하여 선택한 날짜만 강조
     loadExerciseRecords();  // 운동 기록 다시 불러오기
+   
+   // 선택한 날짜 표시 업데이트
+   const selectedDateDisplay = document.getElementById("selected-date");
+   selectedDateDisplay.innerText = selectedDate; // 선택한 날짜 표시
 }
 
 // 이전 달로 이동 (선택된 날짜 초기화)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <body>
       <div id="mainHeader">
-          <a href="/headerTest"><img id="mainHeaderLogo" src="img/logo.png" width="110"></a>
+          <a href="/"><img id="mainHeaderLogo" src="img/logo.png" width="110"></a>
           
           <div id="checkLogin"></div>
           
@@ -10,14 +10,13 @@
           <tbody>
               <tr>
                   <td><a href="#about" onclick="aboutService()">서비스 소개</a></td>
-                  <td><a href="../dashBoardTest">대시보드</a></td>
+                  <td><a href="../dashBoard">대시보드</a></td>
                   <td><a href="../communityTest">커뮤니티</a></td>
-                  <td><a href="../locationTest">클라이밍 위치</a></td>
+                  <td><a href="../mapLocation">클라이밍 위치</a></td>
               </tr>
           </tbody>
       </table>
       <br>
-      
       <article></article>
 </body>
 
@@ -72,9 +71,9 @@
 	            //parentMain.style.display = 'none';
 	            parentMain.remove();
 	        }
-	    } catch (error) {
-	        console.error("Fetch오류ㅜㅜ error:", error);
-	        articleElement.innerHTML = "Fetch 오류로 인한 로드 에러.";
+		    } catch (error) {
+		        console.error("Fetch오류ㅜㅜ error:", error);
+		        articleElement.innerHTML = "Fetch 오류로 인한 로드 에러.";
 	    }
 	}
 

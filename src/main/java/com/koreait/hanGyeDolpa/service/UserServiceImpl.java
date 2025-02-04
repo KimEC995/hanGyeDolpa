@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
 		vo.setUserName("QWERTY");
 		vo.setUserAlias("Samply");
 		vo.setUserNo(1L);
-		vo.setUserProfilePath("img/userLogoSample.png");
+		vo.setUserProfilePath("http://k.kakaocdn.net/dn/KRzD3/btsL7rjaJeE/BZnUaoP4ixtxWOAgh9AJQk/img_640x640.jpg");
 		return vo;
 	}
 

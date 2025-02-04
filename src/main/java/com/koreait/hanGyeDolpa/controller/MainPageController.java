@@ -17,19 +17,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class mainPageController {
+public class MainPageController {
 	
 	boolean loginFlag = false;
 	
 	@Autowired
 	private UserServiceImpl uService;
 	
-	@GetMapping("headerTest")
-	public String headerTest(Model model) {
-		//model.addAttribute("flag", loginFlag);
-		
-		return "mainPage/headerTest";
-	}
+//	@GetMapping("headerTest")
+//	public String headerTest(Model model) {
+//		//model.addAttribute("flag", loginFlag);
+//		
+//		return "mainPage/headerTest";
+//	}
 	
 	@GetMapping("/mainHeaderCheckUserLogin")
 	@ResponseBody
@@ -62,18 +62,13 @@ public class mainPageController {
 	@PostMapping("loginTest")
 	public String loginTestPOST() {
 		loginFlag = uService.makeUserLogin(loginFlag, true);
-		return "redirect:headerTest";
+		return "redirect:/";
 	}
 	
 	@GetMapping("dashBoardTest")
 	public String dashBoardTest() {
-		return "Sample_DashBoard.html";
+		return "dashboard.html";
 	}
-	
-//	@GetMapping("locationTest")
-//	public String locationTest() {
-//		return "Sample_Loacation.html";
-//	}
 	
 	@GetMapping("userProfileTest")
 	public String userProfileTest() {
@@ -86,13 +81,18 @@ public class mainPageController {
 		return "redirect:headerTest";
 	}
 	
-	@GetMapping("aboutService")
-	public String aboutService() {
-		return "aboutService.html";
-	}
+//	@GetMapping("aboutService")
+//	public String aboutService() {
+//		return "aboutService.html";
+//	}
 	
 	@GetMapping("eventPage")
 	public String eventPage() {
 		return "Sample_eventPage.html";
 	}
+	
+//	@GetMapping("locationTest")
+//	public String locationTest() {
+//		return "Sample_Loacation.html";
+//	}
 }

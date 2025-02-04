@@ -154,7 +154,7 @@ function loadDifficultyChart() {
                 seriesType: 'bars',
 				colors: ['FFB327','76C64C','71D2F8','F86470','AA80C6','696969'],
 				series: {6: {
-					type: 'line', 
+					type: 'line',
 					color: '7730AE',
 					lineWidth: 1.5,
 					pointShape: 'round'
