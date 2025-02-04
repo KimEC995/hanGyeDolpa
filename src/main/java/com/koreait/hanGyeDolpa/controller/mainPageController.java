@@ -70,10 +70,10 @@ public class mainPageController {
 		return "Sample_DashBoard.html";
 	}
 	
-	@GetMapping("locationTest")
-	public String locationTest() {
-		return "Sample_Loacation.html";
-	}
+//	@GetMapping("locationTest")
+//	public String locationTest() {
+//		return "Sample_Loacation.html";
+//	}
 	
 	@GetMapping("userProfileTest")
 	public String userProfileTest() {
