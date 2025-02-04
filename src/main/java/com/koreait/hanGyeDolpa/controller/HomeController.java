@@ -21,4 +21,3 @@ public class HomeController {
 	     return "add-exercise"; // add-exercise.html을 반환
 	 }
 }
-
