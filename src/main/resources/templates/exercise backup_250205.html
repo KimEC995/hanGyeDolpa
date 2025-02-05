@@ -8,11 +8,6 @@
     <script src="/js/exercise.js" defer></script>
 </head>
 <body>
-    <!-- header id 추가 (header.html을 불러오기 위함) -->
-    <body>
-        <div id="header"></div>
-    </body>
-
     <header>
         <h1>운동 기록 관리</h1>
     </header>
@@ -51,34 +46,5 @@
             <button onclick="location.href='/dashboard'" class="back-button">&#8592; 대시보드로 돌아가기</button>
         </section>
     </main>
-
-    <!-- footer id 추가  -->
-    <body>
-        <div id="footer"></div>
-    </body>
-
-    <!-- 외부 html 불러오기 -->
-    <!-- 1) header.html -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous">
-    </script>
-    <script>
-        $(function(){
-            $("#header").load("../header.html");
-        })
-    </script>
-
-    <!-- 2) footer.html -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous">
-    </script>
-    <script>
-        $(function(){
-            $("#footer").load("../footer.html");
-        })
-    </script>
-
 </body>
 </html>

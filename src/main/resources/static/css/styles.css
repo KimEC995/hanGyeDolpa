@@ -5,14 +5,12 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    /*background-color: #f4f4f4;*/
-    background-color: red;
+    background-color: #f4f4f4;
 }
 
 /* 달력 스타일 */
 #calendar {
-    /*background-color: #fff;*/
-    background-color: blue;
+    background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
@@ -21,19 +19,16 @@ body {
 }
 
 #calendar-header {
-    background-color: red;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 #calendar-title {
-    background-color: rgb(105, 35, 171);
     margin: 0;
 }
 
 #calendar-days {
-    background-color: blue;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
@@ -62,8 +57,7 @@ body {
 }
 
 .day:hover {
-    /*background-color: #e0e0e0;   기존소스 */
-    background-color: blue;
+    background-color: #e0e0e0; 
 }
 
 /* 운동 기록 스타일 */
