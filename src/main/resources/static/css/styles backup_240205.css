@@ -148,7 +148,7 @@ section {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
-    padding: 20px; /* 기존 20px -> 10px */
+    padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 45%; /* 너비 조정 */
 }
@@ -223,7 +223,7 @@ section {
     display: grid;
     grid-template-columns: repeat(7, 1fr); /* 일주일(7일) 열 */
     gap: 4px;
-    margin-top: 20px; /* 기존 20px -> 5px */
+    margin-top: 20px;
 }
 
 /* 히트맵의 기본 날짜 스타일 */
