@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Write</title>
+	<meta charset="UTF-8">
+	<title>한계돌파 - 게시판 글쓰기</title>
+	<script src="/js/board.js" defer></script>
+	
 </head>
+
 <body>
 	<h1>글 등록 페이지</h1>
 	<hr>
-	<form action="/board/register" method="post">
+	<form action="/board/user/register" method="post">
 		<p>title : <input type="text" name="title"><p>
 		<p>content : <br><textarea name="content"></textarea><p>
-		<p>userId : <input type="text" name="userId"><p>
-		<input type="submit" value="Register">
+		<!-- 작성자 내용은 hidden으로 userID를 가져와서 넘김 -->
+		<input type="hidden" name="userId" id="userIdInputTag">
+		<button>글 등록하기</button>
 	</form>
 </body>
+
 </html>

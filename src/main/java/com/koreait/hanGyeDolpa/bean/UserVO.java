@@ -5,9 +5,7 @@ import lombok.Data;
 @Data
 public class UserVO {
 	Long userNo;
-	String userID;
-	String userPW;
-	String userAlias;
+	String authID;
 	String userName;
 	String userProfilePath;
 }

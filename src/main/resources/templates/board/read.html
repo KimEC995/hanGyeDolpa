@@ -12,13 +12,13 @@
         <p th:text="${vo.content}" class="content"></p>
         
         <div class="info">
-	        <p><span>작성자:</span> [[${vo.userId}]]</p>
+	        <p><span>작성자:</span> [[${vo.userName}]]</p>
 	        <p><span>등록일:</span> [[${vo.regdate}]]</p>
 	        <p><span>수정일:</span> [[${vo.updatedate}]]</p>
         </div>
         
         <div class="button-group">
-            <form action="/board/remove" method="post">
+            <form action="/board/user/remove" method="post">
                 <input type="hidden" name="bno" th:value="${vo.bno}">
                 <button type="submit">삭제</button>
             </form>
@@ -27,9 +27,10 @@
     </div>
 </body>
 <script th:inline="javascript">
+
     function update() {
         let bno = [[${vo.bno}]];
-        location.href = "/board/modify?bno=" + bno;
+        location.href = "/board/user/modify?bno=" + bno;
     }
 </script>
 </html>

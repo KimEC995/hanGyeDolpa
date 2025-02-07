@@ -44,7 +44,7 @@
                 <tr th:each="board : ${list}">
                     <td th:text="${board.bno}" class="hide">1</td>
                     <td><a th:text="${board.title}" th:href="@{/board/read(bno=${board.bno})}"></a></td>
-                    <td th:text="${board.userId}" class="hide">작성자</td>
+                    <td th:text="${board.userName}" class="hide">작성자</td>
                     <td th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}">2023-01-01</td>
                     <td th:text="${board.boardCnt}">0</td>
                 </tr>
@@ -57,12 +57,13 @@
 
     btn.addEventListener("click", function () {
         // alert("Button Pressed");
-        location.href = "/board/register";
+        location.href = "/board/user/register";
     });
 
     var msg = [[${msg}]];
     if (msg) {
         alert(msg);
     }
+    
 </script>
 </html>

@@ -11,7 +11,7 @@
               <tr>
                   <td><a href="#about" onclick="aboutService()">서비스 소개</a></td>
                   <td><a href="../dashBoard">대시보드</a></td>
-                  <td><a href="../communityTest">커뮤니티</a></td>
+                  <td><a href="../board/list">커뮤니티</a></td>
                   <td><a href="../mapLocation">클라이밍 위치</a></td>
               </tr>
           </tbody>
@@ -28,21 +28,21 @@
 	fetch("/mainHeaderCheckUserLogin")
 	   .then(resp => resp.json())
 	   .then(data => {
-	   	console.log("Flag: " + data.flag);
+	   	console.log("uNo: " , data.uNo);
 	
-	       if (data.flag) {
-	           //console.log(data.user.userAlias);
-	    	   loginDivTags = '<div id="userDataMini"><p>환영합니다!' + data.user.userAlias;
+	       if (data.uNo !== 0) {
+	           console.log(data.uVO.userProfilePath);
+	    	   loginDivTags = '<div id="userDataMini"><p>환영합니다!' + data.uVO.userName;
 	    	   loginDivTags += '</p>';
 	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userICON" src="../img/userBookMarkIcon.png"></a>';
 	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userICON" src="../img/userBellIcon.png"></a>';
 	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userICON" src="../img/userSettingIcon.png"></a></div>';
-	    	   loginDivTags += '<a href="/userProfileTest" ><img id="userProfile" src="'+ data.user.userProfilePath +'"></a>';
+	    	   loginDivTags += '<a href="/logout/page" ><img id="userProfile" src="'+ data.uVO.userProfilePath +'"></a>';
 	       
 	       }
 	       else {
-	   	   		//console.log("로그인없슴");
-	    	   loginDivTags += '<a href="/loginTest">로그인</a>';
+	   	   		console.log("로그인없슴");
+	    	   loginDivTags += '<a href="/login/page">로그인</a>';
 	       }
 	       
 	       loginDiv.innerHTML = loginDivTags;

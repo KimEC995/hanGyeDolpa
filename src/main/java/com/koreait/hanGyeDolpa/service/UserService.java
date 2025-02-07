@@ -2,7 +2,9 @@ package com.koreait.hanGyeDolpa.service;
 
 import com.koreait.hanGyeDolpa.bean.UserVO;
 
+import jakarta.servlet.http.HttpSession;
+
 public interface UserService {
-	public UserVO makeSampleUserData();
-	public boolean makeUserLogin(boolean flag, boolean str);
+	public boolean checkUserLogin(HttpSession session);
+	public UserVO getUserDataAllByNo(Long userNo);
 }

@@ -31,7 +31,7 @@
         <hr>
         
         <!-- 수정 폼 -->
-        <form action="/board/modify" method="post">
+        <form action="/board/user/modify" method="post">
             <!-- 제목 -->
             <p>
                 <label for="title"><strong>제목:</strong></label>
@@ -46,7 +46,7 @@
             
             <!-- 작성자, 등록일 -->
             <div class="info">
-                <span><strong>작성자:</strong> <input type="text" name="userId" th:field="${board.userId}" readonly class="readonly-field"></span>
+                <span><strong>작성자:</strong> <input type="text" name="userName" th:field="${board.userName}" readonly class="readonly-field"></span>
                 <span><strong>등록일:</strong> <input type="text" name="regdate" th:field="${board.regdate}" readonly class="readonly-field"></span>
             </div>
             

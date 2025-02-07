@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.koreait.hanGyeDolpa.dto.checkDataForCalendar;
 import com.koreait.hanGyeDolpa.service.DashboardService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -26,21 +27,29 @@ public class DashboardRestController {
 	@GetMapping("/getCalendarData")
 	public List<checkDataForCalendar> getCalendarData(
 										@RequestParam String startDate,
-										@RequestParam String endDate
+										@RequestParam String endDate,
+										HttpSession session
 										){
 		
+		Long userNo = (Long) session.getAttribute("uNo");
+		
 		log.info("------------ Fetch 호출 -> 시작일: " + startDate + " | 종료일: " + endDate);
-		return dashbService.getCalendarData(startDate, endDate);
+		return dashbService.getCalendarData(startDate, endDate, userNo);
 	}
 	
 	@GetMapping("/getComboChartData")
 	public ResponseEntity<Map<String, Map<Integer, Integer>>> getComboChartData(
 										@RequestParam String startDate,
-										@RequestParam String endDate
+										@RequestParam String endDate,
+										HttpSession session
 										){
-		
+		Long userNo = getUserNoInHttpSession(session);
 		log.info("------------ ComboChart 데이터 로드 중... -> 시작일: " + startDate + "| 종료일: " + endDate);
-		Map<String, Map<Integer, Integer>> totalValue = dashbService.getComboData(startDate, endDate);
+		Map<String, Map<Integer, Integer>> totalValue = dashbService.getComboData(startDate, endDate, userNo);
+		
+		if(totalValue == null || totalValue.isEmpty()) {
+			log.info("------------ ComboChart 데이터 없슴!!!");
+		}
 		
 		return ResponseEntity.ok(totalValue);
 	}
@@ -48,20 +57,36 @@ public class DashboardRestController {
 	@GetMapping("/getTotalTimeData")
 	public Map<String, Map<String, Integer>> getTotalTimeData(
 										@RequestParam String startDate,
-										@RequestParam String endDate
+										@RequestParam String endDate,
+										HttpSession session
 										){
-		
-		return dashbService.getTotlaData(startDate, endDate);
+		Long userNo = getUserNoInHttpSession(session);
+		return dashbService.getTotlaData(startDate, endDate, userNo);
 		
 	}
 	
 	@GetMapping("/getHighstScoreData")
 	public Map<String, Integer> getHighstScoreData(
 										@RequestParam String startDate,
-										@RequestParam String endDate
+										@RequestParam String endDate,
+										HttpSession session
 										){
-		return dashbService.getHighstScore(startDate, endDate);
+		Long userNo = getUserNoInHttpSession(session);
+		return dashbService.getHighstScore(startDate, endDate, userNo);
 	}
 	
+	@GetMapping("/setSessionStorage")
+	public String setSessionStorage(HttpSession session) {
+		
+		// 서버 -> 클라이어느 세션
+	    Long uNoValue = getUserNoInHttpSession(session);
+	    return uNoValue != null ? uNoValue.toString() : "";
+	}
 	
+	private Long getUserNoInHttpSession(HttpSession session) {
+		
+		Long userNo = (Long) session.getAttribute("uNo");
+		
+		return userNo;
+	}
 }

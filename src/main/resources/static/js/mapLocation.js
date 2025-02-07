@@ -276,7 +276,7 @@
 	 
 	 // 마커나 아이템 누르면 URL 데이터
 	 function getPlaceUrl(title, Xposition, Yposition){
-		 console.log("Fetch 데이터 전송 시작");
+		 //console.log("Fetch 데이터 전송 시작");
 		 
 		 let str = "/clickMarker?placeName=" + title + "&Xposition="+Xposition+"&Yposition="+Yposition;
 		 
@@ -308,7 +308,6 @@
 	        // 지도랑 옆에꺼 50씩
 	        mapDiv.style.flex = "1";
 	        clickedPlaceDiv.style.flex = "1";
-	        //console.log("Flag is True!!");
 	        
 	        // 버튼 활성화
 	        document.getElementById("reSizingBtn").style.visibility = "visible";

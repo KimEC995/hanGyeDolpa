@@ -13,6 +13,7 @@ import com.koreait.hanGyeDolpa.dto.ExerciseRecordRequest;
 import com.koreait.hanGyeDolpa.dto.ExerciseRequest;
 import com.koreait.hanGyeDolpa.entity.Exercise;
 import com.koreait.hanGyeDolpa.repository.ExerciseRepository;
+import com.koreait.hanGyeDolpa.service.ExerciseService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,19 +25,18 @@ public class ExerciseController {
     @Autowired
     private ExerciseRepository exerciseRepository;
 
+    @Autowired
+    private ExerciseService eService;
+    
     @PostMapping("/save")
-    public ResponseEntity<String> saveExerciseRecord(@RequestBody ExerciseRecordRequest request) {
-        Exercise record = new Exercise();
-        record.setUserNo(request.getUserId());
-        record.setClimbPlace(request.getExercisePlace());
-        record.setClimbStage(request.getExerciseStage());
-        record.setClimbCount(request.getExerciseCount());
-        record.setClimbTime(request.getExerciseTime());
-        record.setExerciseDate(request.getExerciseDate());
-        record.setClimbKcal(request.getExerciseKcal());
+    public String saveExerciseRecord(
+    									@RequestBody ExerciseRecordRequest request
+    									){
+        // 컨트롤러 부분은 비즈니스 로직이 없는게 권장됩니다.(SOLID SRP/OCP/DIP)
+    	// 따라서 아래 내용은 전부 서비스 단으로 옮기겠습니다.
+    	boolean flag = eService.saveExerciseData(request);
         
-        exerciseRepository.save(record);
-        return ResponseEntity.ok("운동 기록이 저장되었습니다!");
+        return "redirect:/dashboard";
     }
     
     @PostMapping("/records")

@@ -9,9 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.koreait.hanGyeDolpa.bean.BoardVO;
 import com.koreait.hanGyeDolpa.mapper.BoardMapper;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Repository
 public class BoardDAO {
 	
@@ -24,15 +21,21 @@ public class BoardDAO {
 		return mapper.getListWithKey(type, keyword);
 	}
 	
+	//사용자이름
+	public List<BoardVO> getUserNameList(){
+		return mapper.getUserNameList();
+	}
+	public List<BoardVO> getUserNameListWithKey(String type, String keyword){
+		return mapper.getUserNameListWithKey(type, keyword);
+	}
+	
 	// register
 	public int register(BoardVO board) {
 		return mapper.insert(board);
 	}
 	
 	// read 
-	public BoardVO read(int bno) {
-//		log.info("=========DAO 123");
-
+	public BoardVO read(Long bno) {
 		return mapper.get(bno);
 	}
 	
@@ -42,12 +45,22 @@ public class BoardDAO {
 	}
 	
 	// remove
-	public int remove(int bno) {
+	public int remove(Long bno) {
 		return mapper.delete(bno);
 	}
 	
 	// viewcnt
-	public void updateViewCount(int bno) {
+	public void updateViewCount(Long bno) {
 		mapper.updateViewCount(bno);
+	}
+	
+	// 보드작성자번호
+	public Long getUserIDinBoard(Long bno) {
+		return mapper.getUserIDinBoard(bno);
+	}
+	
+	// 읽을떄 사용자 이름 나오게
+	public BoardVO getAllDataAndUserName(Long bno) {
+		return mapper.getAllDataAndUserName(bno);
 	}
 }

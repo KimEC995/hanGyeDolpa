@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="boardVO" type="com.koreait.hanGyeDolpa.bean.BoardVO"></typeAlias>
+		<typeAlias alias="userVO" type="com.koreait.hanGyeDolpa.bean.UserVO"></typeAlias>
 		<!--  
 		<typeAlias alias="attachFileVO" type="com.koreait.hanGyeDolpa.board.bean.AttachFileVO"></typeAlias>
 		-->
