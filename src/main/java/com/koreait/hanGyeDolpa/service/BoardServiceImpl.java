@@ -88,7 +88,6 @@ public class BoardServiceImpl implements BoardService{
 			flag = true;
 			}
 		}
-		
 		return flag;
 	}
 	

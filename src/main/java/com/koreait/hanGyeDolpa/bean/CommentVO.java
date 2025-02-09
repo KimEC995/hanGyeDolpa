@@ -1,6 +1,6 @@
 package com.koreait.hanGyeDolpa.bean;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ public class CommentVO {
     private Long bno;       // 게시글 번호
     private Long userId; // 댓글 작성자
     private String content; // 댓글 내용
-    private Date regdate;  // 작성일
+    private Timestamp regdate;  // 작성일
     
     // DBX
     private String userName; //사용자이름
