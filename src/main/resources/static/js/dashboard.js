@@ -74,7 +74,7 @@ function loadCalendarGraph() {
             var chart = new google.visualization.Calendar(document.getElementById('commitHeatmap'));
 
             var options = {
-                title: "출석체크",
+                // title: "출석체크",
                 height: 500,
 				
 				//데이터 True칸
@@ -242,3 +242,5 @@ function loadHighstScoreData() {
 			})
 		    .catch(error => console.error("최고점수에러:", error));
 }
+
+

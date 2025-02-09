@@ -1,7 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서비스 소개</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
 
     <body>
+			<div id="header"></div>
+
     	<div id="aboutServicePage">
     		<div class="container">
 	    		<h1>한계돌파 서비스란?</h1>
@@ -84,6 +92,26 @@
 	        	<img src="img/ServiceStyleGuide.png" style="width:70%;">    	
 	        </div>
     	</div>
+
+		<!--위로가기 -->
+		<!-- <div style="position: fixed; bottom: 20px; right: 20px;">
+			<a href="#aboutServicePage">
+				<img src="/img/upRow.png" title="위로 가기" style="width: 80px; height: 80px;">
+			</a>
+		</div> -->
     </body>
 
+	<!-- 외부 html 불러오기 -->
+    <!-- 1) header.html -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
+    <script>
+        $(function(){
+            $("#header").load("../header.html");
+        })
+    </script>
+
+	
 </html>

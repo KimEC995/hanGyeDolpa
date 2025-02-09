@@ -51,4 +51,9 @@ public class A_MainController {
 	 public String addExercise() {
 	     return "add-exercise"; // add-exercise.html을 반환
 	 }
+
+	 @GetMapping("/about")
+	 public String addAbout(){
+		return "aboutService"; 
+	 }
 }
