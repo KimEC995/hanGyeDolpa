@@ -35,4 +35,13 @@ public class UserServiceImpl implements UserService {
 		return uMapper.getUserDataAllByNo(userNo);
 	}
 
+	@Override
+	public Long getUserNo(HttpSession session) {
+		Long userNo = (Long) session.getAttribute("uNo");
+		if(userNo == null) {
+			userNo = 0L;
+		}
+		return userNo;
+	}
+
 }

@@ -9,12 +9,15 @@ import org.springframework.stereotype.Repository;
 import com.koreait.hanGyeDolpa.bean.BoardVO;
 import com.koreait.hanGyeDolpa.mapper.BoardMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
+@Slf4j
 public class BoardDAO {
 	
 	@Autowired
 	private BoardMapper mapper;
-	
+		
 	// getList
 	public List<BoardVO> getList() { return mapper.getList(); }
 	public List<BoardVO> getListWithKey(String type, String keyword){
@@ -31,7 +34,10 @@ public class BoardDAO {
 	
 	// register
 	public int register(BoardVO board) {
-		return mapper.insert(board);
+		int cnt  = mapper.insertSelectKey(board);
+//		int cnt = mapper.insert(board);
+		
+		return cnt;
 	}
 	
 	// read 
@@ -63,4 +69,5 @@ public class BoardDAO {
 	public BoardVO getAllDataAndUserName(Long bno) {
 		return mapper.getAllDataAndUserName(bno);
 	}
+	
 }

@@ -22,7 +22,7 @@
 		VALUES(NEXTVAL(BOARD_NO_seq),#{title},#{content},#{userId})
 	</insert>
 	<insert id="insertSelectKey">
-		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="Long">
 			SELECT NEXTVAL(BOARD_NO_seq) FROM DUAL
 		</selectKey>
 		INSERT INTO BOARD_TABLE(BOARD_NO, BOARD_TITLE,BOARD_CONTENT,USER_ID)
@@ -105,7 +105,7 @@
 	           COALESCE(U.USER_NAME, '알 수 없음') AS USER_NAME
 	    FROM BOARD_TABLE B
 	    LEFT JOIN USER_TABLE U ON B.USER_ID = U.USER_NO
-	    ORDER BY B.BOARD_NO ASC
+	    ORDER BY B.BOARD_REGDATE DESC
 	</select>
 	
 	<select id="getUserNameListWithKey" resultMap="getUserNameListMap">

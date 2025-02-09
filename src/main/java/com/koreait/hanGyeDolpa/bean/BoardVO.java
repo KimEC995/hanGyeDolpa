@@ -1,6 +1,7 @@
 package com.koreait.hanGyeDolpa.bean;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -13,5 +14,8 @@ public class BoardVO {
     private Date updatedate;   // 수정
     private Long userId;       // 작성자 번호
     private int boardCnt;        // 게시글 조회수
-    private String userName;	// 작성자이름(DB엔X)
+    
+    // DBX
+    private String userName;	// 작성자이름
+    private List<AttachFileVO> attachFile;
 }

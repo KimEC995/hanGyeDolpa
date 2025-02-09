@@ -31,14 +31,10 @@ public class DashboardService {
 
     	List<Exercise> exercises = getAllExercises(startDate, endDate, userNo);
 
-//    	exercises.forEach(data -> log.info(data.getClimbCount().toString()));
     	
         Map<String, Long> groupedData = exercises.stream()
             .collect(Collectors.groupingBy(Exercise::getExerciseDate, Collectors.summingLong(Exercise::getClimbCount)));
 
-//        log.info(groupedData.toString());
-//        groupedData.forEach(data -> log.info(data.toString()));
-        
         return groupedData.entrySet().stream()
             .map(entry -> new checkDataForCalendar(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList());

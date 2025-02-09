@@ -34,7 +34,7 @@ public class ExerciseController {
     									){
         // 컨트롤러 부분은 비즈니스 로직이 없는게 권장됩니다.(SOLID SRP/OCP/DIP)
     	// 따라서 아래 내용은 전부 서비스 단으로 옮기겠습니다.
-    	boolean flag = eService.saveExerciseData(request);
+    	eService.saveExerciseData(request);
         
         return "redirect:/dashboard";
     }
@@ -42,14 +42,10 @@ public class ExerciseController {
     @PostMapping("/records")
     public ResponseEntity<List<Exercise>> getRecords(@RequestBody ExerciseRequest request) {
         // 요청에서 날짜와 사용자 ID를 가져옴
-//    	LocalDate localExDate = request.getExerciseDate();
-//        Date exerciseDate = localExDate // localdate 
     	String exerciseDate = request.getExerciseDate();
         Long userId = request.getUserId();
 
         log.info(""+userId+ "---"+exerciseDate);
-
-        // 데이터베이스에서 기록 조회
 
         List<Exercise> records = exerciseRepository.findByUserNoAndExerciseDate(userId, exerciseDate);
         log.info(""+records);

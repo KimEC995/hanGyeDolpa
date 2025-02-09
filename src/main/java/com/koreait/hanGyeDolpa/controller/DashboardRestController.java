@@ -33,7 +33,6 @@ public class DashboardRestController {
 		
 		Long userNo = (Long) session.getAttribute("uNo");
 		
-		log.info("------------ Fetch 호출 -> 시작일: " + startDate + " | 종료일: " + endDate);
 		return dashbService.getCalendarData(startDate, endDate, userNo);
 	}
 	
@@ -44,11 +43,9 @@ public class DashboardRestController {
 										HttpSession session
 										){
 		Long userNo = getUserNoInHttpSession(session);
-		log.info("------------ ComboChart 데이터 로드 중... -> 시작일: " + startDate + "| 종료일: " + endDate);
 		Map<String, Map<Integer, Integer>> totalValue = dashbService.getComboData(startDate, endDate, userNo);
 		
 		if(totalValue == null || totalValue.isEmpty()) {
-			log.info("------------ ComboChart 데이터 없슴!!!");
 		}
 		
 		return ResponseEntity.ok(totalValue);

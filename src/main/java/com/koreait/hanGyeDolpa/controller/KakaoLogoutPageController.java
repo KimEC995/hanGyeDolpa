@@ -1,13 +1,10 @@
 package com.koreait.hanGyeDolpa.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.koreait.hanGyeDolpa.service.LoginServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/logout/*")
 @Slf4j
 public class KakaoLogoutPageController {
-	
-	@Autowired
-	private LoginServiceImpl kakaoService;
-	
+
 	@Value("${kakao.client-id}")
     private String client_id;
 
@@ -32,9 +26,6 @@ public class KakaoLogoutPageController {
         model.addAttribute("location", location);
         
         String akey = session.getAttribute("aT").toString();
-        
-//        //TODO 카톡로그아웃~~
-//        kakaoService.serviceLogout(akey, session);
         
 		// Session끝 -> 무효화
 		session.setAttribute("uNo", 0L);
