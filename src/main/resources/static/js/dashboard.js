@@ -8,12 +8,26 @@ google.charts.setOnLoadCallback(drawChart);
 // ============================= 차트 전체 호출
 function drawChart() {
 	//const thisDateData = loadCurrentMonth(0);
-    
+	setSessionStorage();	// 세션 사용자 설정
+
 	// Google Charts 라이브러리가 로드되면 실행
     loadCalendarGraph();	// 캘린더 그래프
     loadDifficultyChart();	// 누적 난이도 그래프 로드
 	loadTotalTimeData();	// 이번달 총 운동량
 	loadHighstScoreData();	// 이번달 최고 운동 내용
+}
+
+// ============================= 사용자 데이터 설정
+function setSessionStorage(){
+	// 세션 전역변수 -> HttpSession(서버) 에서 SessionStorage(클라이언트)로 데이터 저장
+	const query = `/api/setSessionStorage`;
+	fetch(query)
+	    .then(response => response.text())
+	    .then(data => {
+	        console.log(data);
+	        sessionStorage.setItem("userId", data);
+	    })
+	    .catch(error => console.error("Error:", error));
 }
 
 // ============================= 기준 달 설정
@@ -45,6 +59,7 @@ function loadCalendarGraph() {
     return fetch(query)
         .then(response => response.json())
         .then(data => {
+			
            // console.log("달력 데이터(Fetch후): ", data);
 
             // 구글 캘린더 열 추가
@@ -102,69 +117,75 @@ function loadDifficultyChart() {
     const startDate = loadCurrentMonth(-2);
     const endDate = currentMonth;
     
-    var chart = new google.visualization.BarChart(document.getElementById('difficultyChart'));        
+	var chartDiv = document.getElementById('difficultyChart');
+    var chart = new google.visualization.BarChart(chartDiv);        
 
     // DB 쿼리문 -> 데이터 호출
     const query = `/api/getComboChartData?startDate=${(startDate + "-01")}&endDate=${(endDate + "-31")}`;
     fetch(query)
         .then(response => response.json())
         .then(data => {
-            //console.log("콤보 데이터:", data);
-
-            // 이제6단계
-            const stages = ['초보(~V0)', '초록(~V2)', '파랑(~V3)', '빨강(~V4)', '보라(~V5)', '고수(V6~)'];
-
-            // 월별 데이터 - 정렬(오름차순)
-            let chartData = Object.entries(data)
-                .sort(([monthA], [monthB]) => monthA.localeCompare(monthB))
-                .map(([month, stageData]) => {
-                    let row = [month];
-
-                    let totalStages = 0;
-                    let totalCount = 0;
-
-                    // 각 단계에 대해 값을 넣고, 없으면 0으로 채움 -> 없으면 단계 땡겨짐
-                    stages.forEach((stage, index) => {
-                        const count = stageData[index + 1] || 0; // index+1로 접근 -> 밀림
-                        row.push(count);
-
-						// 레벨 가중치 부과 -> 평균 구하기
-						if(count != 0) {
-					        totalStages += (index + 1) * count;
-					        totalCount += count;
-					    }
-                        
-                    });
-
-                    // 평균 계산 (0으로 나누는 경우 방지)
-                    const avg = totalCount > 0 ? totalStages / totalCount : 0;
-
-                    // 평균 값을 추가
-                    row.push(avg);
-                    return row;
-                });
-
-            // 데이터
-            var dataTable = google.visualization.arrayToDataTable([
-                    ['Month', '초보(~V0)', '초록(~V2)', '파랑(~V3)', '빨강(~V4)', '보라(~V5)', '고수(V6~)', '평균레벨'],
-                    ...chartData
-                ]);
-                
-            var options = {
-                seriesType: 'bars',
-				colors: ['FFB327','76C64C','71D2F8','F86470','AA80C6','696969'],
-				series: {6: {
-					type: 'line',
-					color: '7730AE',
-					lineWidth: 1.5,
-					pointShape: 'round'
-				}},
-				isStacked: true
-            };
-
-			// 그려
-            chart.draw(dataTable, options);
-            
+			// 데이터 업음
+			if(!data || Object.keys(data).length === 0){
+	            console.log("콤보 데이터:", data);
+				chartDiv.innerHTML = "운동 데이터가 안보여요..ㅠ";
+			}
+			
+			// 데이터 있음
+			else{
+	            // 이제6단계
+	            const stages = ['초보(~V0)', '초록(~V2)', '파랑(~V3)', '빨강(~V4)', '보라(~V5)', '고수(V6~)'];
+	
+	            // 월별 데이터 - 정렬(오름차순)
+	            let chartData = Object.entries(data)
+	                .sort(([monthA], [monthB]) => monthA.localeCompare(monthB))
+	                .map(([month, stageData]) => {
+	                    let row = [month];
+	
+	                    let totalStages = 0;
+	                    let totalCount = 0;
+	
+	                    // 각 단계에 대해 값을 넣고, 없으면 0으로 채움 -> 없으면 단계 땡겨짐
+	                    stages.forEach((stage, index) => {
+	                        const count = stageData[index + 1] || 0; // index+1로 접근 -> 밀림
+	                        row.push(count);
+	
+							// 레벨 가중치 부과 -> 평균 구하기
+							if(count != 0) {
+						        totalStages += (index + 1) * count;
+						        totalCount += count;
+						    }
+	                    });
+	
+	                    // 평균 계산 (0으로 나누는 경우 방지)
+	                    const avg = totalCount > 0 ? totalStages / totalCount : 0;
+	
+	                    // 평균 값을 추가
+	                    row.push(avg);
+	                    return row;
+	                });
+	
+	            // 데이터
+	            var dataTable = google.visualization.arrayToDataTable([
+	                    ['Month', '초보(~V0)', '초록(~V2)', '파랑(~V3)', '빨강(~V4)', '보라(~V5)', '고수(V6~)', '평균레벨'],
+	                    ...chartData
+	                ]);
+	                
+	            var options = {
+	                seriesType: 'bars',
+					colors: ['FFB327','76C64C','71D2F8','F86470','AA80C6','696969'],
+					series: {6: {
+						type: 'line',
+						color: '7730AE',
+						lineWidth: 1.5,
+						pointShape: 'round'
+					}},
+					isStacked: true
+	            };
+	
+				// 그려
+	            chart.draw(dataTable, options);
+            }
         })
         .catch(error => console.error("누적난이도에러:", error));
 }
@@ -188,9 +209,11 @@ function loadTotalTimeData() {
 	    .then(response => response.json())
 	    .then(data =>{
 		        //console.log("월별 시간 데이터(Fetch후): ", data);
-
-				// 데이터 처리
-		        Object.entries(data).forEach(([date, value]) => {
+				if(!data || Object.keys(data).length === 0)
+					{str += "업서용";}
+				else{
+					// 데이터 처리
+			        Object.entries(data).forEach(([date, value]) => {
 		            //console.log(`Date: ${date} | Total Time: ${value}`);
 		            
 					// 데이터 필터
@@ -198,10 +221,10 @@ function loadTotalTimeData() {
 						const totalClimbCount = value.ClimbCount || 0;
 						const totalClimbTime = value.ClimbTime || 0;
 						str += "총 " +  totalClimbCount + "회</h4><h4>총 " + totalClimbTime + "분</h4>";
-						DataDiv.innerHTML += str;
-		            }
-		        });
-				
+		            	}
+		       	 	});
+				}
+				DataDiv.innerHTML += str;
 		    })
 		    .catch(error => console.error("왼쪽구석에러:", error));
 }

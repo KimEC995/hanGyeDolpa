@@ -2,29 +2,43 @@ package com.koreait.hanGyeDolpa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.koreait.hanGyeDolpa.service.UserServiceImpl;
+import com.koreait.hanGyeDolpa.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class A_MainController {
 
-	boolean loginFlag = false;
-	
 	@Autowired
-	private UserServiceImpl uService;
+	private UserService uService;
 	
 	@GetMapping("/")
-	public String headerTest(Model model) {
-		//model.addAttribute("flag", loginFlag);
+	public String headerTest(Long userNo, HttpSession session) {
+		boolean flag = uService.checkUserLogin(session);
+		
+		if(!flag) {
+			session.setAttribute("uNo", 0L);
+		}
 		
 		return "mainPage/headerTest";
 	}
 	
 	@GetMapping("/dashBoard")
-	public String dashBoardTest() {
-		return "dashboard.html";
+	public String dashBoardTest(HttpSession session, RedirectAttributes rttr) {
+		boolean flag = uService.checkUserLogin(session);
+		
+		if(!flag) {
+			rttr.addFlashAttribute("msg", "로그인 정보가 없습니다!\n로그인 페이지로 이동합니다.");
+			return "redirect:/login/page";
+		}
+		else {
+			return "dashboard.html";
+		}
 	}
 	
 	@GetMapping("/mapLocation")
@@ -37,19 +51,14 @@ public class A_MainController {
 		return "aboutService.html";
 	}
 	
-//	 @GetMapping("/")
-//	 public String dashboard() {
-//	     return "dashboard"; // 대시보드 페이지를 반환
-//	 }
-
 	 @GetMapping("/exercise")
 	 public String exercise() {
-	     return "exercise"; // exercise.html을 반환
+	     return "exercise";
 	 }
 	 
 	 @GetMapping("/exercise/add")
 	 public String addExercise() {
-	     return "add-exercise"; // add-exercise.html을 반환
+	     return "add-exercise";
 	 }
 
 	 @GetMapping("/about")

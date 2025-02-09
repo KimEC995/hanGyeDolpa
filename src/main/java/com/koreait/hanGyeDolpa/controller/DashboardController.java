@@ -8,19 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("")
 public class DashboardController {
 	
-	@GetMapping("login")
-	public void login() {
-	}
-	
-//	@GetMapping("exercise")
-//	public void exercise() {
-//	}
-	
 	@GetMapping("exercise-add")
 	public void exercise_add() {
 	}
-	
-	 @GetMapping("dashboard")
-	 public void dashboard() {
-	}
+
 }

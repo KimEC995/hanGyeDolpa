@@ -5,14 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreait.hanGyeDolpa.bean.UserVO;
-import com.koreait.hanGyeDolpa.service.UserServiceImpl;
+import com.koreait.hanGyeDolpa.mapper.UserMapper;
+import com.koreait.hanGyeDolpa.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -22,30 +22,31 @@ public class MainPageController {
 	boolean loginFlag = false;
 	
 	@Autowired
-	private UserServiceImpl uService;
-	
-//	@GetMapping("headerTest")
-//	public String headerTest(Model model) {
-//		//model.addAttribute("flag", loginFlag);
-//		
-//		return "mainPage/headerTest";
-//	}
+	private UserService uService;
 	
 	@GetMapping("/mainHeaderCheckUserLogin")
 	@ResponseBody
-	public Map<String, Object> responseTest() {
+	public Map<String, Object> mainHeaderCheckUserLogin(HttpSession session) {
 		
 		Map<String, Object> resp = new HashMap<>();
 		
-		boolean flag = loginFlag;
-		resp.put("flag", flag);
+		// Session 에서 슈킹
+		Long uNo = uService.getUserNo(session);
 		
-		if(flag) {
-			UserVO vo = uService.makeSampleUserData();
-			resp.put("user", vo);
+		if(uNo == 0) {
+//			log.info("~~~~~~~~~~~~~~~~ "+uNo);
+			resp.put("uVO", null);
 		}
-		resp.put("flag", flag);
-		
+		else {
+		// uno로 가져오기
+	//		UserDto udt = uMap.get
+			//TODO uno기반 슈킹
+			UserVO uv = uService.getUserDataAllByNo(uNo);
+			
+			resp.put("uVO", uv);
+			
+		}
+		resp.put("uNo", uNo);
 		return resp;
 	}
 	
@@ -59,40 +60,19 @@ public class MainPageController {
 		return "Sample_Login.html";
 	}
 	
-	@PostMapping("loginTest")
-	public String loginTestPOST() {
-		loginFlag = uService.makeUserLogin(loginFlag, true);
-		return "redirect:/";
-	}
-	
 	@GetMapping("dashBoardTest")
 	public String dashBoardTest() {
 		return "dashboard.html";
 	}
 	
-	@GetMapping("userProfileTest")
+	@GetMapping("userProfile")
 	public String userProfileTest() {
-		return "Sample_UserProfile.html";
+		return "maintenancePage.html";
 	}
-	
-	@PostMapping("userProfileTest")
-	public String userProfileTestPOST() {
-		loginFlag= uService.makeUserLogin(loginFlag, false);
-		return "redirect:headerTest";
-	}
-	
-//	@GetMapping("aboutService")
-//	public String aboutService() {
-//		return "aboutService.html";
-//	}
-	
+
 	@GetMapping("eventPage")
 	public String eventPage() {
-		return "Sample_eventPage.html";
+		return "maintenancePage.html";
 	}
-	
-//	@GetMapping("locationTest")
-//	public String locationTest() {
-//		return "Sample_Loacation.html";
-//	}
+
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판 목록</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/board.css">
     <style>
     	@media (max-width: 918px){
     		.hide {
@@ -44,7 +44,7 @@
                 <tr th:each="board : ${list}">
                     <td th:text="${board.bno}" class="hide">1</td>
                     <td><a th:text="${board.title}" th:href="@{/board/read(bno=${board.bno})}"></a></td>
-                    <td th:text="${board.userId}" class="hide">작성자</td>
+                    <td th:text="${board.userName}" class="hide">작성자</td>
                     <td th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}">2023-01-01</td>
                     <td th:text="${board.boardCnt}">0</td>
                 </tr>
@@ -56,12 +56,14 @@
     var btn = document.getElementById("write");
 
     btn.addEventListener("click", function () {
-        location.href = "/board/register";
+        // alert("Button Pressed");
+        location.href = "/board/user/register";
     });
 
     var msg = [[${msg}]];
     if (msg) {
         alert(msg);
     }
+    
 </script>
 </html>

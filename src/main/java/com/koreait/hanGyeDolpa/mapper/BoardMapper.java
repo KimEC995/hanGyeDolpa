@@ -16,17 +16,25 @@ public interface BoardMapper {
 	public List<BoardVO> getList();
 	public List<BoardVO> getListWithKey(String type, String keyword);
 	
+	// 게시글리스트2 -> 유저 번호 대신 유저 이름 출력하기
+	public List<BoardVO> getUserNameList();
+	public List<BoardVO> getUserNameListWithKey(String type, String keyword);
+	
 	// 게시글 조회
-	public BoardVO get(int bno);
+	public BoardVO get(Long bno);
+	
+	//조회2 -> 유저 번호 대신 유저 이름
+	public BoardVO getAllDataAndUserName(Long bno);
 	
 	// 게시글 업데이트
 	public int update(BoardVO vo);
 	
 	// 게시글 삭제
-	public int delete(int bno);
+	public int delete(Long bno);
 	
 	// 조회수 증가
-	public void updateViewCount(int bno);
+	public void updateViewCount(Long bno);
 	
-	
+	// 글번호를 기준으로 userId 가져오기
+	public Long getUserIDinBoard(Long bno);
 }

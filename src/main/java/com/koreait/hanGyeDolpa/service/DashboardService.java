@@ -21,26 +21,19 @@ public class DashboardService {
 	@Autowired
 	private ExerciseRepository exRepo;
 
-	// 달력 그래프 테스트 함수(삭제하기)
-	public List<checkDataForCalendar> checkData(String startDate, String endDate){
-	    
-		List<checkDataForCalendar> result = exRepo.findDataForCalendar(startDate, endDate);
-		result.forEach(data -> System.out.println("------------=> Returned data: " + data));
-		return result;
-	}
-	
 	// 1. 전체 데이터 호출 함수
-    private List<Exercise> getAllExercises(String startDate, String endDate) {
-        return exRepo.findAllByDateRange(startDate, endDate);
+    private List<Exercise> getAllExercises(String startDate, String endDate, Long userNo) {
+    	return exRepo.findAllByDateRange(userNo, startDate, endDate);
     }
     
     //1-1. 달력용
-    public List<checkDataForCalendar> getCalendarData(String startDate, String endDate) {
+    public List<checkDataForCalendar> getCalendarData(String startDate, String endDate, Long userNo) {
 
-    	List<Exercise> exercises = getAllExercises(startDate, endDate);
+    	List<Exercise> exercises = getAllExercises(startDate, endDate, userNo);
 
+    	
         Map<String, Long> groupedData = exercises.stream()
-            .collect(Collectors.groupingBy(Exercise::getExerciseDate, Collectors.counting()));
+            .collect(Collectors.groupingBy(Exercise::getExerciseDate, Collectors.summingLong(Exercise::getClimbCount)));
 
         return groupedData.entrySet().stream()
             .map(entry -> new checkDataForCalendar(entry.getKey(), entry.getValue()))
@@ -48,11 +41,9 @@ public class DashboardService {
     }
     
     //1-2. 이번달 운동 시간 총량
-    public Map<String, Map<String, Integer>> getTotlaData(String startDate, String endDate) {
+    public Map<String, Map<String, Integer>> getTotlaData(String startDate, String endDate, Long userNo) {
         
-//    	log.info("321");
-    	
-    	List<Exercise> exercises = exRepo.findAllByDateRange(startDate, endDate);
+    	List<Exercise> exercises = getAllExercises(startDate, endDate, userNo);
 
     	// 월별 그룹
         Map<String, List<Exercise>> groupedByMonth = exercises.stream()
@@ -69,7 +60,7 @@ public class DashboardService {
             // 횟수 | 시간 총합
             int totalClimbCount = monthlyExercises.stream()
                 .mapToInt(Exercise::getClimbCount)
-                .sum()-1;
+                .sum();
             int totalClimbTime = monthlyExercises.stream()
                 .mapToInt(Exercise::getClimbTime)
                 .sum();
@@ -88,23 +79,24 @@ public class DashboardService {
     }
     
     //1-3. 이번달 운동 난이도
-    public Map<String, Map<Integer, Integer>> getComboData(String startDate, String endDate) {
+    public Map<String, Map<Integer, Integer>> getComboData(String startDate, String endDate, Long userNo) {
         
-    	List<Exercise> exercises = exRepo.findAllByDateRange(startDate, endDate);
+    	List<Exercise> exercises = getAllExercises(startDate, endDate, userNo);
 
-        return exercises.stream()
-                .collect(Collectors.groupingBy(
-                        exercise -> exercise.getExerciseDate().substring(0, 7),
-                        Collectors.groupingBy(
-                            Exercise::getClimbStage,
-                            Collectors.summingInt(e -> 1)//숫자세기
-                        )
-                    ));
+    	Map<String, Map<Integer, Integer>> result = exercises.stream()
+	                .collect(Collectors.groupingBy(
+	                        exercise -> exercise.getExerciseDate().substring(0, 7),
+	                        Collectors.groupingBy(
+	                            Exercise::getClimbStage,
+	                            Collectors.summingInt(Exercise::getClimbCount) // 난이도 횟수 * 각 회 횟수
+	                        )
+	                    ));
+        return result;
     }
     
     //1-4. 개인 최고 기록 가져오기
-    public Map<String, Integer> getHighstScore(String startDate, String endDate){
-        List<Exercise> exercises = exRepo.findAllByDateRange(startDate, endDate);
+    public Map<String, Integer> getHighstScore(String startDate, String endDate, Long userNo){
+        List<Exercise> exercises = exRepo.findAllByDateRange(userNo, startDate, endDate);
 
         int highestClimbStage = exercises.stream()
                 .mapToInt(Exercise::getClimbStage)
