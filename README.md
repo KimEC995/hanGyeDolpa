@@ -15,6 +15,8 @@
 - Dev_Ver 설정할 때 필수
     - `application.properties` 설정
         - 로그인 / 로그아웃 관련 키 & URL(카카오)
+        - tmp 파일 경로
+        - DB 서버 관련
     - 지도 관련 키(카카오)
         - `MapService.java` 29번 줄
         - `mapLocation.html` 13번 줄
