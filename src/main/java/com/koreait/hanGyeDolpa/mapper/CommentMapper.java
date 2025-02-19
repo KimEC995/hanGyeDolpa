@@ -12,4 +12,5 @@ public interface CommentMapper {
     //유저이름으로
     List<CommentVO> getCommentsByBnoandName(Long bno);
     boolean insertComment(CommentVO comment);
+    int removeComment(Long bno);
 }

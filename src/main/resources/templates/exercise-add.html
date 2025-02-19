@@ -3,6 +3,7 @@
 <head>
     <title>운동 기록 입력</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/fonts.css">
     <script>
         async function handleExerciseSave(event) {
             event.preventDefault();
@@ -51,15 +52,60 @@
                 alert("저장되지 않았습니다.\n다시 확인해주세요");
             }
         }
+        
+        // 색상추가
+        function changeBackgroundColor() {
+            const selectElement = document.getElementById("exerciseStage");
+            const selectedValue = selectElement.value;
+
+            // 기본 배경 색상 설정
+            selectElement.style.backgroundColor = "";
+
+            // 선택된 단계에 따라 배경 색상 변경
+            switch (selectedValue) {
+                case "1":
+                    selectElement.style.backgroundColor = "#FFFFCC"; // 연한 노랑
+                    break;
+                case "2":
+                    selectElement.style.backgroundColor = "#CCFFCC"; // 연한 초록
+                    break;
+                case "3":
+                    selectElement.style.backgroundColor = "#CCEBFF"; // 연한 파랑
+                    break;
+                case "4":
+                    selectElement.style.backgroundColor = "#FFCCCB"; // 연한 빨강
+                    break;
+                case "5":
+                    selectElement.style.backgroundColor = "#CCCCFF"; // 연한 보라
+                    break;
+                case "6":
+                    selectElement.style.backgroundColor = "#D3D3D3"; // 연한 회색
+                    break;
+                default:
+                    selectElement.style.backgroundColor = ""; // 기본값
+            }
+        }
+        
     </script>
+
+    <!-- 파비콘 -->
+    <link rel="icon" href="/img/logo.png" type="image/png">
 </head>
 <body>
     <form class="exercise-form" onsubmit="handleExerciseSave(event)">
         <label for="exercisePlace">운동 장소:</label>
         <input type="text" id="exercisePlace" name="exercisePlace" placeholder="예: OO클라이밍 지점" required>
 
-        <label for="exerciseStage">운동 단계:</label>
-        <input type="text" id="exerciseStage" name="exerciseStage"  placeholder="예: 1단계" required>
+		<label for="exerciseStage">운동 단계:</label>
+        <select id="exerciseStage" name="exerciseStage" required onchange="changeBackgroundColor()">
+            <option value="" disabled selected>단계 선택</option>
+            <option value="1">초보(~V0)</option>
+            <option value="2">초록(~V2)</option>
+            <option value="3">파랑(~V3)</option>
+            <option value="4">빨강(~V4)</option>
+            <option value="5">보라(~V5)</option>
+            <option value="6">고수(V6~)</option>
+        </select>
 
         <label for="exerciseCount">운동 횟수:</label>
         <input type="number" id="exerciseCount" name="exerciseCount" placeholder="횟수 입력" required>
@@ -72,5 +118,7 @@
         
         <button type="submit">운동 기록 저장</button>
     </form>
+     <!-- footer id 추가  -->
+    <div style="height:1010px"></div>
 </body>
 </html>

@@ -34,7 +34,7 @@ public class UserBoardController {
 		boolean flag = uService.checkUserLogin(session);
 		
 		if(flag) {
-			return "/board/register";
+			return "board/register";
 		}
 		
 		else {
@@ -67,7 +67,7 @@ public class UserBoardController {
 	public String modify(Long bno, Model model, HttpSession session) {
 
 		bService.readBoardService(bno, model);
-		return "/board/modify";
+		return "board/modify";
 		
 		// 확인 후 삭제 -> 진짜 다른 사람 접속했을때 수정 불가능?
 //		boolean flag = bService.checkUserRight(bno, session);

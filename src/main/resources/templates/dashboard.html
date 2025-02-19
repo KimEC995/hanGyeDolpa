@@ -3,9 +3,15 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>대시보드</title>
+	
+	<!-- 파비콘 설정 -->
+    <link rel="icon" href="/img/logo.png" type="image/png">
+
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+
    	<script type="javascript"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js 라이브러리 추가 -->
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -15,9 +21,9 @@
 
 <body>
    <!-- header id 추가  -->
-        <div id = "top"></div> 
-        <div id="header"></div>
-        <div id="service">
+   <div id = "top"></div> 
+   <div id="header"></div>
+   <div id="service">
 
     <main>
 
@@ -64,28 +70,16 @@
     </main>
     </div>
 
-    <!-- 위로가기 
-    <div style="position: fixed; bottom: 20px; right: 20px;">
-        <a href="#header">
+
+     <!--위로가기 -->
+     <div style="position: fixed; bottom: 20px; right: 47%;">
+        <a href="#top">
             <img src="/img/upRow.png" title="위로 가기" style="width: 40px; height: 40px;">
         </a>
     </div>
-     -->
-
-     <!--위로가기 -->
-     <div style="position: fixed; bottom: 20px; right: 20px;">
-        <a href="#top">
-            <img src="/img/upRow.png" title="위로 가기" style="width: 80px; height: 80px;">
-        </a>
-    </div>
-
-
-
 
     <!-- footer id 추가  -->
-
-        <div id="footer"></div>
-
+    <div id="footer"></div>
 
     <!-- 외부 html 불러오기 -->
     <!-- 1) header.html -->
@@ -109,13 +103,6 @@
             $("#footer").load("../footer.html");
         })
     </script>
-
-    
-
-
-
-
-
 
 
 </body>

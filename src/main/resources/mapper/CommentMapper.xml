@@ -15,6 +15,11 @@
         INSERT INTO COMMENTS_TABLE (CNO,BOARD_NO, USER_ID, CONTENT, REGDATE)
         VALUES (NEXTVAL(CNO_seq), #{bno}, #{userId}, #{content}, NOW())
     </insert>
+
+    <delete id="removeComment">
+        DELETE FROM COMMENTS_TABLE
+        WHERE BOARD_NO = #{bno}
+    </delete>
     
     <select id="getCommentsByBnoandName" resultMap="getCmtUserNameListMap">
         SELECT C.BOARD_NO,

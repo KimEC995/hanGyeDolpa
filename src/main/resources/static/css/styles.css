@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Noto Sans KR", serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -230,7 +230,7 @@ section {
 /*------------------------------------------------- 전체 적용 */
 
 body{
-    font-family: "Noto Sans KR";
+    font-family: "Noto Sans KR", serif;
 }
 
 a{
@@ -376,11 +376,6 @@ a{
 	text-align:center;
 }
 
-#unKnownThings-IMG{
-	width: 200px;
-	height: 200px;
-}
-
 /*------------------------------------------------- foot 페이지 */
 
 #footerDIV{
@@ -474,7 +469,7 @@ a{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'Arial', sans-serif; /* 폰트 설정 */
+    font-family: "Noto Sans KR", serif;
 }
 
 /* 라벨 정렬 */
@@ -486,7 +481,8 @@ a{
 }
 
 /* 입력 필드 스타일 */
-.exercise-form input {
+.exercise-form input 
+,.exercise-form select{
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -585,7 +581,7 @@ a{
     padding: 0;         /* 요소 안쪽 여백 제거 */
     overflow: hidden;   /* 넘치는 내용 감추기 */
     overflow-x: hidden; /* 가로 스크롤 제거 */
-    display: flex;      /* 내부 요소를 깔끔하게 정렬 */
+   /* display: flex;      /* 내부 요소를 깔끔하게 정렬 */
     align-items: center; /* 내부 요소가 있다면 중앙 정렬 */
     justify-content: center; /* 내부 요소 가운데 정렬 */
 }

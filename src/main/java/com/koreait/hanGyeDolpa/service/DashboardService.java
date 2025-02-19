@@ -18,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DashboardService {
 
+    // TODO - 코드 최적화!!! 지금 너무 코드가 멍청해!!!!!
+
 	@Autowired
 	private ExerciseRepository exRepo;
 

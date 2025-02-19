@@ -129,6 +129,8 @@ public class LoginServiceImpl{
     	String userName = userInfo.getKakaoAccount().getProfile().getNickName();
     	String imgPath = userInfo.getKakaoAccount().getProfile().getProfileImageUrl();
     	
+    	log.info("AuthID kakao -> " + authId);
+    	
         // TODO 체크하기 ->
         // 매퍼에서 AuthId를 기반으로 동일한 사용자가 있는가?
         // if(true-이름일치) -> 기존의 user의 데이터가 전부 일치하나?(1. 프로필 2. 이름)

@@ -2,11 +2,37 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>to be contine..</title>
+<style>
+    body {
+        position: relative;
+        overflow-x: hidden; /* 가로 스크롤 방지 */
+    }
+    .moving-image {
+        position: absolute;
+        top: 260px; /* 원하는 위치 조정 */
+        left: -300px; /* 화면 왼쪽 바깥에서 시작 */
+        width: 1000px; /* 이미지 크기 조정 */
+        animation: moveRight 10s linear infinite;
+    }
+
+    @keyframes moveRight {
+        0% {
+            left: -300px;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+</style>
+    <!-- 파비콘 -->
+    <link rel="icon" href="/img/logo.png" type="image/png">
+
 </head>
 <body>
 	<div id="header"></div>
-	<img src="/img/maintenancePage.png">
+	<div style="height: 1020px;"></div>
+	<div><img class="moving-image" src="/img/maintenancePage.png"></div>
 	<div id="footer"></div>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js"

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Repository
 public class CommentDAO {
+
 	@Autowired
     private CommentMapper commentMapper;
 
@@ -26,5 +27,9 @@ public class CommentDAO {
     
     public List<CommentVO> getCommentsByBnoandName(Long bno) {
         return commentMapper.getCommentsByBnoandName(bno);
+    }
+
+    public int deleteComments(Long bno){
+        return commentMapper.removeComment(bno);
     }
 }

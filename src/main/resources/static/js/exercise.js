@@ -102,6 +102,16 @@ function goToNextMonth() {
     loadCalendar();
 }
 
+// 난이도에 따른 색상 매핑
+const stageColors = {
+    "1": "#FFFFCC", // 연한 노랑
+    "2": "#CCFFCC", // 연한 초록
+    "3": "#CCEBFF", // 연한 파랑
+    "4": "#FFCCCB", // 연한 빨강
+    "5": "#CCCCFF", // 연한 보라
+    "6": "#D3D3D3", // 연한 회색
+};
+
 // 운동 기록 불러오기
 async function loadExerciseRecords() {
     const recordsDiv = document.getElementById("records-container");
@@ -138,10 +148,14 @@ async function loadExerciseRecords() {
                 let timeString = "";
                 if (hours > 0) timeString += `${hours}시간 `;
                 timeString += `${minutes}분`;
+				
+				// 난이도에 따른 배경 색상 설정
+				const color = stageColors[record.climbStage] || "#FFFFFF"; // 기본 색상은 흰색
 
                 recordElement.innerHTML = `
+				<div style="background-color: ${color}; padding: 10px; border-radius: 5px;">
                     <strong>운동 장소:</strong> ${record.climbPlace}<br>
-                    <strong>난이도:</strong> ${record.climbStage}<br>
+                    <strong>난이도:</strong> ${record.climbStage}단계<br>
                     <strong>시도 횟수:</strong> ${record.climbCount}<br>
                     <strong>운동 시간:</strong> ${timeString}<br>
                     <strong>소모 칼로리:</strong> ${record.climbKcal}kcal<br>

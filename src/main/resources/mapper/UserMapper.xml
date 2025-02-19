@@ -6,23 +6,18 @@
 
     <insert id="insertUser">
         INSERT INTO USER_TABLE (USER_NO, AUTH_ID, USER_NAME, USER_IMG)
-        SELECT NEXTVAL(USER_NO_seq), #{authId}, #{userName}, #{userProfilePath}
+        SELECT NEXTVAL(USER_NO_seq), #{authID}, #{userName}, #{userProfilePath}
         FROM DUAL
-        WHERE NOT EXISTS (
-            SELECT 1
-            FROM USER_TABLE
-            WHERE AUTH_ID = #{authId}
-        );
     </insert>
     
     <select id="getUserNo" resultType="Long">
     	SELECT USER_NO
     	FROM USER_TABLE
-    	WHERE AUTH_ID = #{authId}
+    	WHERE AUTH_ID = #{authID}
     </select>
 	
 	<select id="getUserData" resultType="userVO">
-	    SELECT USER_NO AS userNo, AUTH_ID AS authId, USER_NAME AS userName, USER_IMG AS userProfilePath
+	    SELECT USER_NO AS userNo, AUTH_ID AS authID, USER_NAME AS userName, USER_IMG AS userProfilePath
 	    FROM USER_TABLE
 	    WHERE USER_NO = #{userNo}
 	</select>
@@ -30,17 +25,17 @@
 	<select id="checkDupData" resultType="Boolean">
 	    SELECT AUTH_ID
 	    FROM USER_TABLE
-	    WHERE AUTH_ID = #{authId}
+	    WHERE AUTH_ID = #{authID}
 	</select>
 	
 	<select id="getUserDataAll" resultType="userVO">
-	    SELECT USER_NO AS userNo, AUTH_ID AS authId, USER_NAME AS userName, USER_IMG AS userProfilePath
+	    SELECT USER_NO AS userNo, AUTH_ID AS authID, USER_NAME AS userName, USER_IMG AS userProfilePath
 	    FROM USER_TABLE
-	    WHERE AUTH_ID = #{authId}
+	    WHERE AUTH_ID = #{authID}
    	</select>
    	
    	<select id="getUserDataAllByNo" resultType="userVO">
-    	SELECT USER_NO AS userNo, AUTH_ID AS authId, USER_NAME AS userName, USER_IMG AS userProfilePath
+    	SELECT USER_NO AS userNo, AUTH_ID AS authID, USER_NAME AS userName, USER_IMG AS userProfilePath
 	    FROM USER_TABLE
 	    WHERE USER_NO = #{userNo}
    	</select>

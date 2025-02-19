@@ -36,7 +36,8 @@ public class UploadController {
 		
 		List<AttachFileVO> fileList = new ArrayList();
 		
-		String uploadFolder = "C:\\Users\\kimeu\\AppData\\Local\\Temp\\hanGyeDolpaImg"; // 본인 temp파일 경로 표
+		// tmp 경로로 설정하기(시스템마다 다름.)
+		String uploadFolder = [본인 경로];
 		String uploadFolderPath = getFolder();
 		// yyyy/mm/dd 경로 생
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
@@ -68,7 +69,6 @@ public class UploadController {
 			
 			
 			// 1. File Creation(Empty)
-			// File saveFile = new File(uploadFolder, f.getOriginalFilename());
 			File saveFile = new File(uploadPath, uploadFileName);
 			
 			// 2. Contents Copy
@@ -136,7 +136,7 @@ public class UploadController {
 	    ResponseEntity<byte[]> result = null;
 	    HttpHeaders header = new HttpHeaders();
 
-	    File file = new File("C:\\Users\\kimeu\\AppData\\Local\\Temp\\hanGyeDolpaImg", fileName);
+	    File file = new File([본인경로], fileName);
 
 	    try {
 	        if (!file.exists()) {  // 파일이 존재하지 않으면 404 반환

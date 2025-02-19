@@ -20,13 +20,13 @@ public class MapService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	// TODO - 코드 최적화하기!!!!!!!!!!!! - 지금 개판이야!!!!!!!
 	public String getPlaceID(String placeName, double Xposition, double Yposition) {
 		
 		String placeID = "http://place.map.kakao.com/";
 		
 		final String KAKAO_API_URL = "https://dapi.kakao.com/v2/local/search/keyword.json";
-		// 일단은 하드코딩 해놨는데, 나중에 서비스 배포시 반드시 암호화할 것
-		final String KAKAO_API_KEY = "bba502ffca79940b6b67288936813ffd";
+		final String KAKAO_API_KEY = [본인 키];
 
 		// 요처URL 작성
 		String getSearchKeyWord = placeName;

@@ -74,6 +74,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	private int boardRemove(Long bNo) {
+		cDao.deleteComments(bNo);
 		return bDao.remove(bNo);
 	}
 	
